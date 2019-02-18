@@ -24,9 +24,6 @@ namespace MYXZ
         public MonsterView View { get; set; }
 
         [Inject]
-        public RefreshAOISignal RefreshAoiSignal { get; set; }
-
-        [Inject]
         public RegisterSkillSignal RegisterSkillSignal { get; set; }
 
         [Inject]
@@ -35,12 +32,9 @@ namespace MYXZ
         [Inject]
         public GetSkillInputSignal GetSkillInputSignal { get; set; }
 
-        private int mTimer = -1;
-
         public override void OnRegister()
         {
             RegisterSkillSignal.Dispatch(this.gameObject, View.SkillTreeID);
-            mTimer = 0;
             //View.Character.UseSkill = () => StartCoroutine(SkillUsing());
 //            View.BeAttackedSignal.AddListener(BeAttacked);
 //            View.UseSkillSignal.AddListener(UseSkill);
@@ -75,14 +69,5 @@ namespace MYXZ
 //            this.View.Character.CurrentSkill.SkillExit();
 //            this.View.Character.SetCurrentSkill(null);
 //        }
-
-        void FixedUpdate()
-        {
-            if (mTimer == 0)
-            {
-                RefreshAoiSignal.Dispatch(this.transform);
-            }
-            mTimer = (mTimer + 1) % 10;
-        }
     }
 }

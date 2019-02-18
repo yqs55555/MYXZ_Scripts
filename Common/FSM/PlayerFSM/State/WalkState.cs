@@ -50,25 +50,25 @@ namespace MYXZ
             mIsWalk = false;
             mLR = mFB = 0;
             mDirection = Vector3.zero;
-            if (MYXZInputManager.Instance.GetKey(KeyCode.W))
+            if (MYXZInput.GetKey(KeyCode.W))
             {
                 mDirection += this.Fsm.Owner.transform.forward;
                 mIsWalk = true;
                 mFB--;
             }
-            if (MYXZInputManager.Instance.GetKey(KeyCode.A))
+            if (MYXZInput.GetKey(KeyCode.A))
             {
                 mDirection -= this.Fsm.Owner.transform.right;
                 mIsWalk = true;
                 mLR--;
             }
-            if (MYXZInputManager.Instance.GetKey(KeyCode.S))
+            if (MYXZInput.GetKey(KeyCode.S))
             {
                 mDirection -= this.Fsm.Owner.transform.forward;
                 mIsWalk = true;
                 mFB++;
             }
-            if (MYXZInputManager.Instance.GetKey(KeyCode.D))
+            if (MYXZInput.GetKey(KeyCode.D))
             {
                 mDirection += this.Fsm.Owner.transform.right;
                 mIsWalk = true;
@@ -94,11 +94,11 @@ namespace MYXZ
             {
                 Fsm.PerformTransition(Transition.ReadytoChat); //进入ChatState
             }
-            if (MYXZInputManager.Instance.GetKeyDown(KeyCode.Space))
+            if (MYXZInput.GetKeyDown(KeyCode.Space))
             {
                 Fsm.PerformTransition(Transition.ReadytoJump); //进入JumpState
             }
-            if (MYXZInputManager.Instance.GetKey(KeyCode.LeftShift))
+            if (MYXZInput.GetKey(KeyCode.LeftShift))
             {
                 Fsm.PerformTransition(Transition.ReadytoRun);//进入RunState
             }

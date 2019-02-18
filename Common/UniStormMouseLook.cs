@@ -31,7 +31,7 @@ public class UniStormMouseLook : MonoBehaviour
     void Update()
     {
         // Ensure the cursor is always locked when set
-        if (MYXZInputManager.Instance.GetMouseButton(1))
+        if (MYXZInput.GetMouseButton(1))
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.lockState = CursorLockMode.Confined;
@@ -39,7 +39,7 @@ public class UniStormMouseLook : MonoBehaviour
             OpenMouseLook();
         }
 
-        if (!MYXZInputManager.Instance.GetMouseButton(1))
+        if (!MYXZInput.GetMouseButton(1))
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;

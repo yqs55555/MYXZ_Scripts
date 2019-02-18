@@ -32,7 +32,6 @@ namespace MYXZ
 
         protected override void Start()
         {
-            this.Player = new Player(this.gameObject);
             base.Start();
             WeatherSystem.SetDate(12, 12, 2018);
             WeatherSystem.ChangeWeatherInstant(12);
@@ -41,33 +40,38 @@ namespace MYXZ
         void Update()
         {
             Player.Update();
-            if (MYXZInputManager.Instance.GetKeyDown(KeyCode.Escape))
+            if (MYXZInput.GetKeyDown(KeyCode.Escape))
             {
                 EscSignal.Dispatch();
             }
 
-            if ((this.Player.CurrentStateID == StateID.IdleState || this.Player.CurrentStateID == StateID.WalkState)
-                    && MYXZInputManager.Instance.GetMouseButtonDown(0))
+            if ((this.Player.PlayerFsm.CurrentStateID == StateID.IdleState || this.Player.PlayerFsm.CurrentStateID == StateID.WalkState)
+                    && MYXZInput.GetMouseButtonDown(0))
             {
-                GameObject talker;
-                if ((talker = ClickEvent.OnMouseClickTag(0, "NPC", this.Player.TalkDistance)) != null)
-                {
-                    NpcView view = talker.GetComponent<NpcView>();
-                    if (view == null)
-                    {
-                        Debug.LogError(talker.name + "不是NPC");
-                    }
-                    else
-                    {
-                        this.Player.TalkTo(view.NPC);
-                    }
-                }
+                TryToTalk();
             }
         }
 
         void FixedUpdate()
         {
             Player.FixedUpdate();
+        }
+
+        private void TryToTalk()
+        {
+            GameObject talker;
+            if ((talker = ClickEvent.OnMouseClickTag(0, "NPC", this.Player.TalkDistance)) != null)
+            {
+                NpcView view = talker.GetComponent<NpcView>();
+                if (view == null)
+                {
+                    Debug.LogError(talker.name + "不是NPC");
+                }
+                else
+                {
+                    this.Player.TalkTo(view.NPC);
+                }
+            }
         }
     }
 }

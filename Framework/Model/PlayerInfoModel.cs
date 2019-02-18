@@ -49,7 +49,7 @@ namespace MYXZ
         /// 当前人物的属性
         /// </summary>
         [ProtoMember(5)]
-        public Player Info = new Player(GameObject.FindWithTag("Player"));  //TODO 这里是测试用例
+        public Player CurrentPlayer;  //TODO 这里是测试用例
 
         /// <summary>
         /// 当前人物的金币
@@ -75,28 +75,28 @@ namespace MYXZ
         [ProtoMember(9)]
         public int Experience;
 
-        public PlayerInfoModel()    //TODO 测试用
-        {
-            this.Info.HP = 200;
-            this.Info.Level = 1;
-            this.Info.PhysicalAttack = 20;
-            this.Info.MagicAttack = 22;
-            this.Info.PhysicalDefense = 10;
-            this.Info.MagicDefense = 12;
-            this.Experience = 0;
-        }
+//        public PlayerInfoModel()    //TODO 测试用
+//        {
+//            this.CurrentPlayer.HP = 200;
+//            this.CurrentPlayer.Level = 1;
+//            this.CurrentPlayer.PhysicalAttack = 20;
+//            this.CurrentPlayer.MagicAttack = 22;
+//            this.CurrentPlayer.PhysicalDefense = 10;
+//            this.CurrentPlayer.MagicDefense = 12;
+//            this.Experience = 0;
+//        }
 
-        public void Init(SaveInfo save)
-        {
-            this.CurrentHasEquipments = save.PlayerInfoModel.CurrentHasEquipments;
-            this.Info = save.PlayerInfoModel.Info;
-            this.FinishTaskIds = save.PlayerInfoModel.FinishTaskIds;
-            this.CurrentTaskIds = save.PlayerInfoModel.CurrentTaskIds;
-            this.CurrentHasItems = save.PlayerInfoModel.CurrentHasItems;
-            this.Gold = save.PlayerInfoModel.Gold;
-            this.Silver = save.PlayerInfoModel.Silver;
-            this.Copper = save.PlayerInfoModel.Copper;
-            this.Experience = save.PlayerInfoModel.Experience;
-        }
+//        public void Init(SaveInfo save)
+//        {
+//            this.CurrentHasEquipments = save.PlayerInfoModel.CurrentHasEquipments;
+//            this.CurrentPlayer = save.PlayerInfoModel.CurrentPlayer;
+//            this.FinishTaskIds = save.PlayerInfoModel.FinishTaskIds;
+//            this.CurrentTaskIds = save.PlayerInfoModel.CurrentTaskIds;
+//            this.CurrentHasItems = save.PlayerInfoModel.CurrentHasItems;
+//            this.Gold = save.PlayerInfoModel.Gold;
+//            this.Silver = save.PlayerInfoModel.Silver;
+//            this.Copper = save.PlayerInfoModel.Copper;
+//            this.Experience = save.PlayerInfoModel.Experience;
+//        }
     }
 }

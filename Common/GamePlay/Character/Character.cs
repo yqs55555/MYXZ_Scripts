@@ -20,40 +20,43 @@ namespace MYXZ
 {
     [ProtoContract]
     [RequireComponent(typeof(Animator))]
-    [RequireComponent(typeof(CharacterController))]
     public abstract class Character
     {
         [ProtoMember(1)]
         public int HP;
-
         [ProtoMember(2)]
         public int Level;
-
         [ProtoMember(3)]
         public int PhysicalAttack;
-
         [ProtoMember(4)]
         public int PhysicalDefense;
-
         [ProtoMember(5)]
         public int MagicAttack;
-
         [ProtoMember(6)]
         public int MagicDefense;
 
-        [HideInInspector]
-        public GameObject TargetGameObject;
+        private GameObject m_targetGameObject;
+        public GameObject TargetGameObject
+        {
+            get { return this.m_targetGameObject; }
+        }
         [HideInInspector]
         public Animator Animator;
 
-        private CharacterController m_characterController;
         public float Mass;
 
         /// <summary>
         /// 随角色状态变动的运动方向
         /// </summary>
         public Vector3 Direction;
-        public float BaseSpeed;
+        [SerializeField]
+        private float m_baseSpeed;
+
+        public float BaseSpeed
+        {
+            get { return this.m_baseSpeed; }
+            set { m_baseSpeed = value; }
+        }
         public float JumpSpeed;
         [HideInInspector]
         public float Rate = 1.0f;
@@ -68,19 +71,16 @@ namespace MYXZ
 
         protected Character(GameObject gameObject)
         {
-            TargetGameObject = gameObject;
+            this.m_targetGameObject = gameObject;
             this.Animator = this.TargetGameObject.GetComponent<Animator>();
-            this.m_characterController = this.TargetGameObject.GetComponent<CharacterController>();
         }
 
         public virtual void Update()
         {
-
         }
 
         public virtual void FixedUpdate()
         {
-            this.m_characterController.Move((Direction + Physics.gravity) * Time.fixedDeltaTime);
         }
     }
 }

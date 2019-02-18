@@ -43,13 +43,13 @@ namespace MYXZ
         public override void OnPause()
         {
             base.OnPause();
-            MYXZInputManager.Instance.IsEnable = false;
+            MYXZInput.IsEnable = false;
         }
 
         public override void OnResume()
         {
             base.OnResume();
-            MYXZInputManager.Instance.IsEnable = true;
+            MYXZInput.IsEnable = true;
         }
     }
 }

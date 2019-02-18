@@ -13,7 +13,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -24,9 +23,9 @@ namespace MYXZ
     /// </summary>
     public class MYXZTimer : Singleton<MYXZTimer>
     {
-        private Dictionary<int, Coroutine> m_masks = new Dictionary<int, Coroutine>();
+        private Dictionary<int, Coroutine> m_marks = new Dictionary<int, Coroutine>();
 
-        IEnumerator DelayFunc(Action func, float delay, int repeat, int mask)
+        IEnumerator DelayFunc(Action func, float delay, int repeat, int mark)
         {
             WaitForSeconds waitTime = new WaitForSeconds(delay);
             while (repeat-- != 0)
@@ -35,7 +34,7 @@ namespace MYXZ
                 func();
             }
 
-            m_masks.Remove(mask);
+            m_marks.Remove(mark);
         }
 
         /// <summary>
@@ -58,26 +57,26 @@ namespace MYXZ
         /// <returns>这个计时器的标记</returns>
         public int AddTimer(Action func, float delay, int repeat)
         {
-            int randomMask;
+            int randomMark;
             do
             {
-                randomMask = Random.Range(Int32.MinValue, Int32.MaxValue);
+                randomMark = Random.Range(Int32.MinValue, Int32.MaxValue);
             }
-            while (m_masks.Keys.Contains(randomMask));
-            Coroutine coro = StartCoroutine(DelayFunc(func, delay, repeat, randomMask));
-            m_masks.Add(randomMask, coro);
-            return randomMask;
+            while (m_marks.Keys.Contains(randomMark));
+            Coroutine coro = StartCoroutine(DelayFunc(func, delay, repeat, randomMark));
+            m_marks.Add(randomMark, coro);
+            return randomMark;
         }
 
         /// <summary>
-        /// 终止标记为mask的Timer
+        /// 终止标记为mark的Timer
         /// </summary>
-        /// <param name="mask">Timer的mask</param>
-        public void StopTimer(int mask)
+        /// <param name="mark">Timer的mask</param>
+        public void StopTimer(int mark)
         {
-            if (m_masks.Keys.Contains(mask))
+            if (m_marks.Keys.Contains(mark))
             {
-                StopCoroutine(m_masks[mask]);
+                StopCoroutine(m_marks[mark]);
             }
         }
     }

@@ -32,8 +32,8 @@ namespace MYXZ
 
         public override void Reason(GameObject[] gameObjects)
         {
-            if (MYXZInputManager.Instance.GetKey(KeyCode.A) || MYXZInputManager.Instance.GetKey(KeyCode.W)
-                || MYXZInputManager.Instance.GetKey(KeyCode.S) || MYXZInputManager.Instance.GetKey(KeyCode.D)) //如果玩家按下了移动键
+            if (MYXZInput.GetKey(KeyCode.A) || MYXZInput.GetKey(KeyCode.W)
+                || MYXZInput.GetKey(KeyCode.S) || MYXZInput.GetKey(KeyCode.D)) //如果玩家按下了移动键
             {
                 this.Fsm.PerformTransition(Transition.ReadytoWalk); //进入WalkState
             }
@@ -41,7 +41,7 @@ namespace MYXZ
             {
                 this.Fsm.PerformTransition(Transition.ReadytoChat); //进入ChatState
             }
-            if (MYXZInputManager.Instance.GetKeyDown(KeyCode.Space))
+            if (MYXZInput.GetKeyDown(KeyCode.Space))
             {
                 Fsm.PerformTransition(Transition.ReadytoJump); //进入JumpState
             }

@@ -29,5 +29,4 @@ namespace MYXZ
             return string.Format("{0}, HP: {1}", base.ToString(), HP);
         }
     }
-
 }

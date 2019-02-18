@@ -44,7 +44,7 @@ namespace MYXZ
                     //TODO 如果有两个前置任务呢？
                     if (MYXZGameDataManager.Instance.GetTaskById(task).Predecessors.Length < 1 || PlayerInfoModel.FinishTaskIds.Contains(MYXZGameDataManager.Instance.GetTaskById(task).Predecessors[0]))//判断是否完成前置任务
                     {
-                        if (PlayerInfoModel.Info.Level >= MYXZGameDataManager.Instance.GetTaskById(task).LevelRequirement)//判断是否达到要求等级
+                        if (PlayerInfoModel.CurrentPlayer.Level >= MYXZGameDataManager.Instance.GetTaskById(task).LevelRequirement)//判断是否达到要求等级
                         {
                             acceptableTasks.Add(task);
                         }

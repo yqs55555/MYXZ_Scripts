@@ -12,6 +12,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using strange.extensions.injector.impl;
 using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 using UnityEngine;
@@ -45,9 +46,6 @@ namespace MYXZ
         public ChangeSceneSignal ChangeSceneSignal { get; set; }
 
         [Inject]
-        public RefreshAOISignal RefreshAoiSignal { get; set; }
-
-        [Inject]
         public RegisterSkillSignal RegisterSkillSignal { get; set; }
 
         [Inject]
@@ -57,13 +55,12 @@ namespace MYXZ
         public BeAttackedSignal BeAttackedSignal { get; set; }
 
         [Inject]
-        public RequestGetCharacterInfoSignal ReqGetCharacterInfoSignal { get; set; }
-
-        private int mTimer = -1;
+        public InitPlayerSignal InitPlayerSignal { get; set; }
 
         public override void OnRegister()
         {
-
+            this.View.Player = new Player(this.gameObject);
+            InitPlayerSignal.Dispatch(this.View.Player);
             MYXZUIManager.Instance.PushPanel(UIPanelType.WorldSpaceBackGroundPanel);
             ResGetPlayerTransformSignal.AddListener(SetPlayerPosition);
             View.EscSignal.AddListener(KeyEscDown);
@@ -73,10 +70,9 @@ namespace MYXZ
             ResGetCharaInfoSignal.AddListener(GetCharaInfo);
             RegisterSkillSignal.Dispatch(this.gameObject, View.SkillTreeID);
 
-            ReqGetPlayerTransformSignal.Dispatch();
-            this.Invoke("BeginRefreshAOI", 1.0f);
+//            ReqGetPlayerTransformSignal.Dispatch();
             //            View.Character.UseSkill = () => StartCoroutine(SkillUsing());
-            ReqGetCharacterInfoSignal.Dispatch();
+//            ReqGetCharacterInfoSignal.Dispatch();
         }
 
         public override void OnRemove()
@@ -88,11 +84,6 @@ namespace MYXZ
             ResGetCharaInfoSignal.RemoveListener(GetCharaInfo);
             ResGetPlayerTransformSignal.RemoveListener(SetPlayerPosition);
 
-        }
-
-        private void BeginRefreshAOI()
-        {
-            mTimer = 0;
         }
 
         private void BeAttacked(Transform attacker, SkillBase skill)
@@ -114,15 +105,6 @@ namespace MYXZ
         //            this.View.Character.CurrentSkill.SkillExit();
         //            this.View.Character.SetCurrentSkill(null);
         //        }
-
-        void FixedUpdate()
-        {
-            if (mTimer == 0)
-            {
-                RefreshAoiSignal.Dispatch(this.transform);
-            }
-            mTimer = (mTimer + 1) % 10;
-        }
 
         void OnTriggerEnter(Collider other)
         {

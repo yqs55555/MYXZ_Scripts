@@ -33,7 +33,7 @@ namespace MYXZ
             m_id = id;
         }
 
-        public abstract SkillNodeState Use(Entity skillUser);
+        public abstract SkillNodeState Use(MYXZEntity skillUser);
 
         public void AddChildNode(SkillNode skillNode)
         {

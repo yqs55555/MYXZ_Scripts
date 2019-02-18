@@ -24,9 +24,6 @@ namespace MYXZ
         [Inject]
         public string TargetScene { get; set; }
 
-        [Inject]
-        public TaskService TaskService { get; set; }
-
         private static Dictionary<string, string> mMessage = new Dictionary<string, string>()
         {
             {"Scene01", "确定前往雾隐山 天青观？"},
@@ -34,15 +31,15 @@ namespace MYXZ
             {"Scene02", "确定前往苗疆 凤鸣镇？"}
         };
 
-        private static Dictionary<string, string> mSceneId = new Dictionary<string, string>()
-        {
-            {"Scene01", "060001"},
-            {"Scene02", "060002"}
-        };
+//        private static Dictionary<string, string> mSceneId = new Dictionary<string, string>()
+//        {
+//            {"Scene01", "060001"},
+//            {"Scene02", "060002"}
+//        };
 
         public override void Execute()
         {
-            Debug.Log("Command");
+            Debug.Log("Change Scene");
             MessageBoxPanelView MessageBoxView =
                 MYXZUIManager.Instance.GetPanel(UIPanelType.MessageBoxPanel) as MessageBoxPanelView;
             MessageBoxView.MessageText.text = mMessage[TargetScene];
@@ -53,11 +50,7 @@ namespace MYXZ
 
         private void ChangeScene()
         {
-            if (!TargetScene.Equals("StartScene"))
-            {
-                TaskService.CheckTaskFinishOfScene(mSceneId[TargetScene]);
-            }
-            else
+            if (TargetScene.Equals("StartScene"))
             {
                 Object.Destroy(WorldSpaceGameRoot.Instance.gameObject);
             }

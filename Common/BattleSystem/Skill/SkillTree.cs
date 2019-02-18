@@ -38,7 +38,7 @@ namespace MYXZ
             CurrentSkill = null;
         }
 
-        public void Use(Entity entity)
+        public void Use(MYXZEntity entity)
         {
 //            if (entity.Transform.GetComponent<CharacterView>().Character.CurrentSkill != null)
 //            {

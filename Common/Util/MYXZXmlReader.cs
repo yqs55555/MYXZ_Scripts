@@ -31,9 +31,10 @@ namespace MYXZ
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(new StreamReader(
 #if UNITY_EDITOR
-                System.IO.Path.Combine(Application.dataPath, "ABResources/Config/TotalConfig.xml")
+                System.IO.Path.Combine(Application.dataPath,
+                    System.IO.Path.Combine(Setting.Config.DEBUG_PATH, Setting.Config.ROOT))
 #else
-                System.IO.Path.Combine(Application.dataPath, "TotalConfig.xml")
+                System.IO.Path.Combine(Application.dataPath, Setting.Config.ROOT)
 #endif
                 ).ReadToEnd());
             XmlNode rootNode = doc.FirstChild;

@@ -1,7 +1,7 @@
 ﻿/*
- * FileName             : ISkillUseable.cs
+ * FileName             : InitPlayerSignal.cs
  * Author               : yqs
- * Creat Date           : 2018.1.5
+ * Creat Date           : 2019.2.14
  * Revision History     : 
  *          R1: 
  *              修改作者：
@@ -10,17 +10,13 @@
  */
 using System.Collections;
 using System.Collections.Generic;
+using strange.extensions.signal.impl;
 using UnityEngine;
 
 namespace MYXZ
 {
-    /// <summary>
-    /// 可以释放技能
-    /// </summary>
-    public interface ISkillUseable
+    public class InitPlayerSignal : Signal<Player>
     {
-        bool IsUsingSkill { get; }
-        void UseSkill(SkillTree skill);
-        void StopSkill();
     }
 }
+

@@ -27,22 +27,13 @@ namespace MYXZ
         public BeginTalkSignal BeginTalkSignal { get; set; }
 
         [Inject]
-        public RefreshAOISignal RefreshAoiSignal { get; set; }
-
-        private int mTimer = -1;
+        public InitNpcSignal InitNpcSignal { get; set; }
 
         public override void OnRegister()
         {
-            this.View.NPC = new NPC(this.gameObject);
+            this.View.NPC = new NPC(this.View.gameObject);
+            InitNpcSignal.Dispatch(this.View.NPC, this.View.ID);
             View.BeginTalkSignal.AddListener(RequestTalk);
-            if (View.NPC.IsStaticNPC)
-            {
-                RefreshAoiSignal.Dispatch(this.transform);
-            }
-            else
-            {
-                mTimer = 0;
-            }
         }
 
         public override void OnRemove()
@@ -53,15 +44,6 @@ namespace MYXZ
         private void RequestTalk()
         {
             BeginTalkSignal.Dispatch(View.ID);
-        }
-
-        void FixedUpdate()
-        {
-            if (mTimer == 0)
-            {
-                RefreshAoiSignal.Dispatch(this.transform);
-            }
-            mTimer = (mTimer + 1) % 10;
         }
     }
 }

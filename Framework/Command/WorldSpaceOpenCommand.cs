@@ -22,17 +22,10 @@ namespace MYXZ
     /// </summary>
     public class WorldSpaceOpenCommand : Command
     {
-        [Inject]
-        public RequestLoadArchiveSignal ReqLoadArchiveSignal { get; set; }
-
-        [Inject]
-        public PlayerInfoModel PlayerModel { get; set; }
-
         public override void Execute()
         {
-            PlayerModel.Info = new Player(GameObject.FindWithTag("Player"));
             MYXZUIManager.Instance.PopAllPanel();
-            MYXZInputManager.Instance.IsEnable = true;
+            MYXZInput.IsEnable = true;
             MYXZGameDataManager.Instance.Init();
             //ReqLoadArchiveSignal.Dispatch();
         }

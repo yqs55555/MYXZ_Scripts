@@ -56,10 +56,10 @@ namespace MYXZ
         public void PlayerGetExperience(int Experience)
         {
             PlayerInfoModel.Experience += Experience;
-            while (PlayerInfoModel.Info.Level * 100 < PlayerInfoModel.Experience)
+            while (PlayerInfoModel.CurrentPlayer.Level * 100 < PlayerInfoModel.Experience)
             {
-                PlayerInfoModel.Experience = PlayerInfoModel.Experience - PlayerInfoModel.Info.Level * 100;
-                PlayerInfoModel.Info.Level++;
+                PlayerInfoModel.Experience = PlayerInfoModel.Experience - PlayerInfoModel.CurrentPlayer.Level * 100;
+                PlayerInfoModel.CurrentPlayer.Level++;
             }
         }
 
@@ -98,27 +98,27 @@ namespace MYXZ
                 switch (currentEquipment.EquipmentType)
                 {
                     case Equipment.Type.Weapon:
-                        PlayerInfoModel.Info -= PlayerInfoModel.Info.Weapon;
-                        PlayerInfoModel.Info.Weapon = currentEquipment;
+                        PlayerInfoModel.CurrentPlayer -= PlayerInfoModel.CurrentPlayer.Weapon;
+                        PlayerInfoModel.CurrentPlayer.Weapon = currentEquipment;
                         break;
                     case Equipment.Type.Hat:
-                        PlayerInfoModel.Info -= PlayerInfoModel.Info.Hat;
-                        PlayerInfoModel.Info.Hat = currentEquipment;
+                        PlayerInfoModel.CurrentPlayer -= PlayerInfoModel.CurrentPlayer.Hat;
+                        PlayerInfoModel.CurrentPlayer.Hat = currentEquipment;
                         break;
                     case Equipment.Type.Clothes:
-                        PlayerInfoModel.Info -= PlayerInfoModel.Info.Clothes;
-                        PlayerInfoModel.Info.Clothes = currentEquipment;
+                        PlayerInfoModel.CurrentPlayer -= PlayerInfoModel.CurrentPlayer.Clothes;
+                        PlayerInfoModel.CurrentPlayer.Clothes = currentEquipment;
                         break;
                     case Equipment.Type.Shoes:
-                        PlayerInfoModel.Info -= PlayerInfoModel.Info.Shoes;
-                        PlayerInfoModel.Info.Shoes = currentEquipment;
+                        PlayerInfoModel.CurrentPlayer -= PlayerInfoModel.CurrentPlayer.Shoes;
+                        PlayerInfoModel.CurrentPlayer.Shoes = currentEquipment;
                         break;
                     case Equipment.Type.Ornament:
-                        PlayerInfoModel.Info -= PlayerInfoModel.Info.Ornament1;
-                        PlayerInfoModel.Info.Ornament1 = currentEquipment;
+                        PlayerInfoModel.CurrentPlayer -= PlayerInfoModel.CurrentPlayer.Ornament1;
+                        PlayerInfoModel.CurrentPlayer.Ornament1 = currentEquipment;
                         break;
                 }
-                PlayerInfoModel.Info += currentEquipment;
+                PlayerInfoModel.CurrentPlayer += currentEquipment;
                 return true;
             }
             return false;
@@ -130,7 +130,7 @@ namespace MYXZ
         /// <returns></returns>
         public Player GetCharaInfo()
         {
-            return this.PlayerInfoModel.Info;
+            return this.PlayerInfoModel.CurrentPlayer;
         }
 
         /// <summary>

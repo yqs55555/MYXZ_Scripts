@@ -8,12 +8,15 @@
  *              修改日期：
  *              修改内容：
  */
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using strange.extensions.command.api;
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
+using strange.extensions.injector.impl;
 using UnityEngine;
 
 namespace MYXZ
@@ -59,6 +62,7 @@ namespace MYXZ
             #region Model
             injectionBinder.Bind<PlayerInfoModel>().ToSingleton();  //角色信息
 			injectionBinder.Bind<AOIInfoModel>().ToSingleton();//AOI信息
+            injectionBinder.Bind<MapModel>().ToSingleton();
             #endregion
 
             #region Mediator
@@ -97,10 +101,11 @@ namespace MYXZ
             commandBinder.Bind<RequestGetPlayerTransformSignal>().To<RequestGetPlayerTransformCommand>();
             commandBinder.Bind<RequestLoadArchiveSignal>().To<RequestLoadArchiveCommand>();
             commandBinder.Bind<RequestGetPlayerMoneySignal>().To<RequestGetPlayerMoneyCommand>();
-            commandBinder.Bind<RefreshAOISignal>().To<RefreshAOICommond>();
             commandBinder.Bind<RegisterSkillSignal>().To<RegisterSkillCommand>();
             commandBinder.Bind<GetSkillInputSignal>().To<GetSkillInputCommand>();
             commandBinder.Bind<BeAttackedSignal>().To<BeAttackedCommand>();
+            commandBinder.Bind<InitPlayerSignal>().To<InitPlayerCommand>();
+            commandBinder.Bind<InitNpcSignal>().To<InitNpcCommand>();
 			#endregion
 
             #region Service

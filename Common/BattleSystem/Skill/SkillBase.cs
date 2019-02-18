@@ -47,17 +47,17 @@ namespace MYXZ
             this.mSkillTime = skillTime;
         }
 
-        public override SkillNodeState Use(Entity skillUser)
+        public override SkillNodeState Use(MYXZEntity skillUser)
         {
             SkillEnter(skillUser);
             List<Transform> interests = new List<Transform>();
-            foreach (Entity entity in skillUser.CurrentInterestEntityList)
-            {
-                if (!entity.Transform.Equals(skillUser.Transform))
-                {
-                    interests.Add(entity.Transform);
-                }
-            }
+//            foreach (Entity entity in skillUser.CurrentInterestEntityList)
+//            {
+//                if (!entity.Transform.Equals(skillUser.Transform))
+//                {
+//                    interests.Add(entity.Transform);
+//                }
+//            }
 
             if (interests.Count == 0)
             {
@@ -80,7 +80,7 @@ namespace MYXZ
         /// <summary>
         /// 开始这个技能
         /// </summary>
-        private void SkillEnter(Entity skillUser)
+        private void SkillEnter(MYXZEntity skillUser)
         {
             skillUser.Transform.GetComponent<Animator>().Play(this.mAnimationName);
             //skillUser.Transform.GetComponent<CharacterView>().Character.SetCurrentSkill(this);

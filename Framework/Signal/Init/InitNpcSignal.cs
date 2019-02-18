@@ -1,7 +1,7 @@
 ﻿/*
- * FileName             : AOISignal.cs
- * Author               : zsz
- * Creat Date           : 2018.10.6
+ * FileName             : InitNpcSignal.cs
+ * Author               : 
+ * Creat Date           : 
  * Revision History     : 
  *          R1: 
  *              修改作者：
@@ -15,11 +15,7 @@ using UnityEngine;
 
 namespace MYXZ
 {
-    /// <summary>
-    /// 发出更新AOI信号，传输物体的transform属性
-    /// </summary>
-    public class RefreshAOISignal : Signal<Transform>
+    public class InitNpcSignal : Signal<NPC, string>
     {
-
     }
 }

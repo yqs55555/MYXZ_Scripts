@@ -24,7 +24,7 @@ namespace MYXZ
             NextUse = 0;
         }
 
-        public override SkillNodeState Use(Entity skillUser)
+        public override SkillNodeState Use(MYXZEntity skillUser)
         {
             SkillNodeState currentNodeState = SkillNodeState.FailToRun;
             for (int i = 0; i < ChildSkillNodes.Count; i++)

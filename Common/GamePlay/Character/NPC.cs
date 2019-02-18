@@ -22,6 +22,7 @@ namespace MYXZ
         public bool IsStaticNPC = true;
         public List<Transform> PatrolPoints;
 
+        [SerializeField]
         private bool m_isTalking = false;
         private IUseFSM m_npcFsm;
 

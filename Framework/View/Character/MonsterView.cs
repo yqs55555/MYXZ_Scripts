@@ -33,7 +33,7 @@ namespace MYXZ
         protected override void Start()
         {
             base.Start();
-            Character = new Player(this.gameObject);
+            Character = new Monster(this.gameObject);
             bl_HUDText.Instance.SetHUDText("怪物", this.transform, Color.blue, bl_Guidance.Static,30);
         }
 

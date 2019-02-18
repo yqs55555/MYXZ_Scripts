@@ -2,15 +2,6 @@
  * FileName             : GameStartMenuPanelMediator.cs
  * Author               : yqs
  * Creat Date           : 2017.12.28
- * Revision History     : 
- *          R1:                                                     R2:
- *              修改作者：zsz                                            修改作者：hy
- *              修改日期：2018.01.23                                     修改日期：2018.01.26
- *              修改内容：添加了GameInfoSignal相关内容                   修改内容：添加了GameSaveSignal相关内容
- *          R3:
- *              修改作者：yqs
- *              修改日期：2018.2.3
- *              修改内容：使用PushPanelSignal来弹出Panel，去除重复代码
  */
 
 using strange.extensions.mediation.impl;

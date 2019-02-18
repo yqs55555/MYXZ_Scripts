@@ -32,12 +32,21 @@ namespace MYXZ
         public Equipment Ornament2;
 
         [Tooltip("距离小于此时可以交谈")]
-        public float TalkDistance;
+        public float TalkDistance = 10;
         [SerializeField]
         private ICanBeTalkTo m_talkingTo;
+        [SerializeField]
         private bool m_isTalking = false;
+        [SerializeField]
         private bool m_isUsingSkill = false;
+
+        private CharacterController m_characterController;
+
         private IUseFSM m_playerFsm;
+        public IUseFSM PlayerFsm
+        {
+            get { return this.m_playerFsm; }
+        }
 
         /// <summary>
         /// 处于IsTalking状态时与玩家对话的NPC
@@ -47,14 +56,10 @@ namespace MYXZ
             get { return m_talkingTo; }
         }
 
-        public StateID CurrentStateID
-        {
-            get { return this.m_playerFsm.CurrentStateID; }
-        }
-
         public Player(GameObject player) : base(player)
         {
-            m_playerFsm = new PlayerFsm(this);
+            this.m_playerFsm = new PlayerFsm(this);
+            this.m_characterController = this.TargetGameObject.GetComponent<CharacterController>();
         }
 
         public static Player operator +(Player player, Equipment equipment)
@@ -94,9 +99,9 @@ namespace MYXZ
         {
             if (!this.m_isTalking && !talker.IsTalking)
             {
+                talker.TalkTo(this);
                 this.m_isTalking = true;
                 this.m_talkingTo = talker;
-                talker.TalkTo(this);
             }
         }
 
@@ -122,7 +127,8 @@ namespace MYXZ
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            this.m_playerFsm.FixedUpdate();
+            this.PlayerFsm.FixedUpdate();
+            this.m_characterController.Move((Direction + Physics.gravity) * Time.fixedDeltaTime); //这里方向由PlayerFSM赋值
         }
     }
 }
