@@ -43,7 +43,7 @@ namespace MYXZ
                     MYXZUIManager.Instance.GetPanel(UIPanelType.MessageBoxPanel) as MessageBoxPanelView;
                 messageBox.CancelEvent = RefuseTask;    //按下取消键
                 messageBox.ConfirmEvent = GetTask;      //按下确定键
-                messageBox.MessageText.text = "是否接取任务" + MYXZGameDataManager.Instance.GetTaskById(CurrentTaskId).Name; //显示的消息
+                messageBox.MessageText.text = "是否接取任务" + MYXZConfigLoader.Instance.GetTask(CurrentTaskId).Name; //显示的消息
                 PushPanelSignal.Dispatch(UIPanelType.MessageBoxPanel);   //弹出  
             }
             else        //如果只是平常的对话

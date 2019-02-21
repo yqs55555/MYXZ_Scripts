@@ -69,7 +69,7 @@ namespace MYXZ
             {
                 Init();
             }
-            Item = MYXZGameDataManager.Instance.GetItemOrEquipmentById(itemId);
+            Item = MYXZConfigLoader.Instance.GetItem(itemId);
             this.mItemImage.sprite = Item.Sprite;
             this.mItemName.text = Item.Name;
             this.mItemCount.text = count.ToString();

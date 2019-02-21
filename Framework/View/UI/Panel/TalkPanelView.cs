@@ -64,7 +64,7 @@ namespace MYXZ
                 TalkFinishSignal.Dispatch();
                 return;
             }
-            HeadImage.sprite = MYXZGameDataManager.Instance.GetNpcInfoById(CurrentTalks[mIndex].Speaker).Sprite;    //TODO 需要给主角也提供一个配置文件
+            HeadImage.sprite = MYXZConfigLoader.Instance.GetNpcInfo(CurrentTalks[mIndex].Speaker).Sprite;    //TODO 需要给主角也提供一个配置文件
             mWordText.text = CurrentTalks[mIndex].Words;
             mIndex++;
         }

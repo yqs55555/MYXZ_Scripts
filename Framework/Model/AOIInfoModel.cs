@@ -103,22 +103,23 @@ namespace MYXZ
             AllGrids[entity.LocatedGridPosition].Add(entity);
         }
 
+        /// <summary>
+        /// 当前地图是否存在坐标为position的Grid
+        /// </summary>
+        /// <param name="position">目标grid的坐标</param>
+        /// <returns>是否存在</returns>
         public bool Contains(Vector2Int position)
         {
-            return this.AllGrids.ContainsKey(position);
+            //通过与地图大小比对来减少性能需要
+            return position.x >= this.m_xLimit.x && 
+                   position.x <= this.m_xLimit.y && 
+                   position.y >= this.m_yLimit.x && 
+                   position.y <= this.m_yLimit.y;
         }
 
         public void AddEntityUpdateMark(MYXZEntity entity, int mark)
         {
             this.m_entityUpdateMark.Add(entity, mark);
-        }
-
-        private void ShowAllGrids()
-        {
-            foreach (KeyValuePair<Vector2Int, MYXZGrid> grid in AllGrids)
-            {
-                Debug.Log(grid.Key + "," + grid.Value);
-            }
         }
     }
 }

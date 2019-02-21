@@ -12,9 +12,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /*
- *  思路（极简GC）：当加载AssetBundle ab时，获取它的所有依赖包集合list，并与ab一并加入mAllAssetBundles中，然后对于list中的每个AssetBundle的使用
- * 记录+1，当卸载一个AssetBundl ab时，获取它的所有依赖包集合list，将用户指定要卸载的ab直接卸载，list的使用记录全部-1，
- * 如果这是某个包的使用记录降为0了，那么就将这个包卸载
+ *  思路（极简GC）：当加载AssetBundle ab时，获取它的所有依赖包集合list，并与ab一并加入mAllAssetBundles中，
+ * 然后对于list中的每个AssetBundle的使用记录+1，当卸载一个AssetBundle ab时，获取它的所有依赖包集合list，
+ * 将用户指定要卸载的ab直接卸载，list的使用记录全部-1，如果这是某个包的使用记录降为0了，那么就将这个包卸载
  */
 namespace MYXZ
 {
@@ -48,6 +48,10 @@ namespace MYXZ
         /// 记录被依赖的AssetBundle引用次数
         /// </summary>
         private Dictionary<string, int> mDependenciesUse = new Dictionary<string, int>();
+        /// <summary>
+        /// 延迟卸载的AssetBundle
+        /// </summary>
+        private List<string> m_delayUnload = new List<string>();
 
         /// <summary>
         /// 加载路径为path的AssetBundle，如果已加载，直接返回
@@ -106,6 +110,19 @@ namespace MYXZ
                         }
                     }
                 }
+            }
+        }
+
+        public void Unload(string path, float delay, bool unloadAllLoadedObjects = true)
+        {
+            if (!this.m_delayUnload.Contains(path))
+            {
+                this.m_delayUnload.Add(path);
+                MYXZTimer.Instance.AddTimer(() =>
+                {
+                    Unload(path, unloadAllLoadedObjects);
+                    this.m_delayUnload.Remove(path);
+                }, delay);
             }
         }
     }

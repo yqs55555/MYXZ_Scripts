@@ -31,7 +31,7 @@ namespace MYXZ
             {
                 using (var fs = File.OpenRead(Application.dataPath + "/../Save/SaveInfo.bin"))//反序列化读取存档
                     save = Serializer.Deserialize<SaveInfo>(fs);
-                MYXZGameDataManager.Instance.CurrentSaveInfo = save;
+                MYXZConfigLoader.Instance.CurrentSaveInfo = save;
 //                PlayerInfoModel.Init(MYXZGameDataManager.Instance.CurrentSaveInfo);
             }
         }

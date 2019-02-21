@@ -27,11 +27,11 @@ namespace MYXZ
             get { return this.m_locatedGridPosition; }
             private set
             {
-                if (!m_locatedGridPosition.Equals(value))
+                if (m_locatedGridPosition != value)
                 {
                     this.IsDirty = true;
                     Vector2Int tmpPosition = m_locatedGridPosition;
-                    this.m_locatedGridPosition = value;
+                    this.m_locatedGridPosition.Set(value.x, value.y);
                     NotifyObservers(tmpPosition);
                 }
             }

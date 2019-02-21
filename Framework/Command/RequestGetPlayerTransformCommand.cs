@@ -25,9 +25,9 @@ namespace MYXZ
 
         public override void Execute()
         {
-            if (MYXZGameDataManager.Instance.CurrentSaveInfo != null)
+            if (MYXZConfigLoader.Instance.CurrentSaveInfo != null)
             {
-                ResPlayerTransformSignal.Dispatch(MYXZGameDataManager.Instance.CurrentSaveInfo.GetplayerTransform());
+                ResPlayerTransformSignal.Dispatch(MYXZConfigLoader.Instance.CurrentSaveInfo.GetplayerTransform());
             }
             else
             {

@@ -32,7 +32,7 @@ namespace MYXZ
         /// <param name="id">Item的ID</param>
         public void PlayerGetNewItem(string id)
         {
-            if (MYXZGameDataManager.Instance.GetItemOrEquipmentById(id) != null)   //如果存在此ID的Item
+            if (MYXZConfigLoader.Instance.GetItem(id) != null)   //如果存在此ID的Item
             {
                 if (id.Substring(0, 2).Equals("04"))                    //如果是装备
                 {
@@ -93,8 +93,7 @@ namespace MYXZ
         {
             if (PlayerInfoModel.CurrentHasEquipments.Contains(id))
             {
-                Equipment currentEquipment = MYXZGameDataManager.Instance.GetItemOrEquipmentById(id) as Equipment;
-                Debug.Log(currentEquipment.EquipmentType + "," + currentEquipment.Name);
+                Equipment currentEquipment = MYXZConfigLoader.Instance.GetItem(id) as Equipment;
                 switch (currentEquipment.EquipmentType)
                 {
                     case Equipment.Type.Weapon:

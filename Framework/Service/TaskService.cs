@@ -8,8 +8,7 @@
  *              修改日期：
  *              修改内容：
  */
-using System;
-using System.Collections;
+
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -37,14 +36,14 @@ namespace MYXZ
         public List<string> GetAcceptableTasksInNpc(string npcId)
         {
             List<string> acceptableTasks = new List<string>();
-            foreach (string task in MYXZGameDataManager.Instance.GetNpcInfoById(npcId).TaskIds)
+            foreach (string task in MYXZConfigLoader.Instance.GetNpcInfo(npcId).TaskIds)
             {
                 if (!PlayerInfoModel.FinishTaskIds.Contains(task) && !PlayerInfoModel.CurrentTaskIds.Contains(task))
                 {
                     //TODO 如果有两个前置任务呢？
-                    if (MYXZGameDataManager.Instance.GetTaskById(task).Predecessors.Length < 1 || PlayerInfoModel.FinishTaskIds.Contains(MYXZGameDataManager.Instance.GetTaskById(task).Predecessors[0]))//判断是否完成前置任务
+                    if (MYXZConfigLoader.Instance.GetTask(task).Predecessors.Length < 1 || PlayerInfoModel.FinishTaskIds.Contains(MYXZConfigLoader.Instance.GetTask(task).Predecessors[0]))//判断是否完成前置任务
                     {
-                        if (PlayerInfoModel.CurrentPlayer.Level >= MYXZGameDataManager.Instance.GetTaskById(task).LevelRequirement)//判断是否达到要求等级
+                        if (PlayerInfoModel.CurrentPlayer.Level >= MYXZConfigLoader.Instance.GetTask(task).LevelRequirement)//判断是否达到要求等级
                         {
                             acceptableTasks.Add(task);
                         }
@@ -60,7 +59,7 @@ namespace MYXZ
         /// <param name="id">任务的ID</param>
         private void GetRewardBeforeTask(string id)
         {
-            Task task = MYXZGameDataManager.Instance.GetTaskById(id);
+            Task task = MYXZConfigLoader.Instance.GetTask(id);
             foreach (KeyValuePair<string, int> kvp in task.TakeTaskItem)//获取物品奖励
             {
                 for (int j = 0; j < kvp.Value; j++)
@@ -80,7 +79,7 @@ namespace MYXZ
         /// <returns>是否正在执行此NPC的任务</returns>
         public bool IsInTaskOfNpc(string npcId, out List<string> tasks)
         {
-            tasks = (from task in MYXZGameDataManager.Instance.GetNpcInfoById(npcId).TaskIds
+            tasks = (from task in MYXZConfigLoader.Instance.GetNpcInfo(npcId).TaskIds
                      where PlayerInfoModel.CurrentTaskIds.Contains(task)
                      select task).ToList();
             return tasks.Count > 0;
@@ -96,7 +95,7 @@ namespace MYXZ
             {
                 PlayerInfoModel.CurrentTaskIds.Add(id);
                 GetRewardBeforeTask(id);
-                bl_HUDText.Instance.SetHUDText("获得任务" + MYXZGameDataManager.Instance.GetTaskById(id).Name, GameObject.FindWithTag("Player").transform, Color.black, bl_Guidance.Up, 15, 0.1f);
+                bl_HUDText.Instance.SetHUDText("获得任务" + MYXZConfigLoader.Instance.GetTask(id).Name, GameObject.FindWithTag("Player").transform, Color.black, bl_Guidance.Up, 15, 0.1f);
             }
         }
 
@@ -109,13 +108,13 @@ namespace MYXZ
             for (int i = 0; i < PlayerInfoModel.CurrentTaskIds.Count; i++)//遍历任务列表
             {
                 string id = PlayerInfoModel.CurrentTaskIds[i];
-                if (MYXZGameDataManager.Instance.GetTaskById(id).Deliverer.Equals(npcId) && !PlayerInfoModel.FinishTaskIds.Contains(id))//匹配任务列表中是否有对应的任务交付对象,且任务是否完成过
+                if (MYXZConfigLoader.Instance.GetTask(id).Deliverer.Equals(npcId) && !PlayerInfoModel.FinishTaskIds.Contains(id))//匹配任务列表中是否有对应的任务交付对象,且任务是否完成过
                 {
-                    Task task = MYXZGameDataManager.Instance.GetTaskById(id);   //完成的任务
+                    Task task = MYXZConfigLoader.Instance.GetTask(id);   //完成的任务
                     task.Name = task.Name + "(已完成)";
                     PlayerInfoModel.FinishTaskIds.Add(id);
                     PlayerInfoModel.CurrentTaskIds.Remove(id);
-                    bl_HUDText.Instance.SetHUDText("完成任务" + MYXZGameDataManager.Instance.GetTaskById(id).Name, GameObject.FindWithTag("Player").transform, Color.black, bl_Guidance.Up, 15, 0.1f);
+                    bl_HUDText.Instance.SetHUDText("完成任务" + MYXZConfigLoader.Instance.GetTask(id).Name, GameObject.FindWithTag("Player").transform, Color.black, bl_Guidance.Up, 15, 0.1f);
 
                     foreach (KeyValuePair<string, int> kvp in task.FinishTaskItem)//获取物品奖励
                     {
@@ -135,7 +134,7 @@ namespace MYXZ
             for(int i = 0;i < PlayerInfoModel.CurrentTaskIds.Count;i++)
             {
                 string currentTaskId = PlayerInfoModel.CurrentTaskIds[i];
-                Task task = MYXZGameDataManager.Instance.GetTaskById(currentTaskId);
+                Task task = MYXZConfigLoader.Instance.GetTask(currentTaskId);
                 if (task.Targets[0].Type == TaskTargetType.Arrive)
                 {
                     if (task.Targets[0].TargetId.Equals(sceneId))

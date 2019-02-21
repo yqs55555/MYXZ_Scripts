@@ -8,19 +8,160 @@
  *              修改日期：
  *              修改内容：
  */
-using System.Collections;
+
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using UnityEngine;
 
 namespace MYXZ
 {
     public class Setting
     {
+        private const string ROOT_CONFIG_PATH = "Setting.xml";
+        private static readonly string BASE_PATH =
+#if UNITY_EDITOR
+            Path.Combine(Application.dataPath, "ABResources/Config");
+#else
+            Application.dataPath;
+#endif
+        public static readonly string BASE_ASSET_BUNDLE_PATH = Application.streamingAssetsPath;
+
+        public static void Init()
+        {
+            XmlDocument xml = new XmlDocument();
+            xml.LoadXml(new StreamReader(Path.Combine(BASE_PATH, ROOT_CONFIG_PATH)).ReadToEnd());
+
+            XmlNode setting = xml.FirstChild;
+            foreach (XmlNode node in setting.ChildNodes)
+            {
+                switch (node.Name)
+                {
+                    case "Type":
+                        InitConfig(node);
+                        break;
+                    case "AssetBundlePath":
+                        InitAssetBundlePath(node);
+                        break;
+                    case "Save":
+                        InitSave(node);
+                        break;
+                    case "AOI":
+                        InitAOI(node);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private static void InitConfig(XmlNode configNode)
+        {
+            foreach (XmlNode childNode in configNode.ChildNodes)
+            {
+                Config.Id2Type.Add(childNode.Attributes["Id"].Value, childNode.Attributes["Type"].Value);
+            }
+        }
+
+        private static void InitAssetBundlePath(XmlNode pathNode)
+        {
+            foreach (XmlNode childNode in pathNode.ChildNodes)
+            {
+                IStoreInAssetBundle storeInAssetBundleRes;
+                string type = childNode.Attributes["Type"].Value;
+                string path = childNode.Attributes["Path"].Value;
+                int chunk = -1;
+                foreach (XmlNode childNodeChildNode in childNode.ChildNodes)
+                {
+                    switch (childNodeChildNode.Name)
+                    {
+                        case "Chunk":
+                            {
+                                chunk = Int32.Parse(childNodeChildNode.InnerText);
+                                break;
+                            }
+                    }
+                }
+                storeInAssetBundleRes = new StoreInAssetBundleResource(type, path, chunk);
+                AssetBundlePath.Type2Path.Add(type, storeInAssetBundleRes);
+            }
+        }
+
+        private static void InitSave(XmlNode saveNode)
+        {
+            foreach (XmlNode childNode in saveNode.ChildNodes)
+            {
+                switch (childNode.Name)
+                {
+                    case "FolderPath":
+                        Save.FolderPath = childNode.InnerText;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private static void InitAOI(XmlNode aoiNode)
+        {
+            foreach (XmlNode childNode in aoiNode.ChildNodes)
+            {
+                switch (childNode.Name)
+                {
+                    case "GridField":
+                        AOI.GRID_FIELD = int.Parse(childNode.InnerText);
+                        break;
+                    case "UpdateRate":
+                        AOI.UPDATE_RATE = float.Parse(childNode.InnerText);
+                        break;
+                    case "PlayerInterestRadius":
+                        AOI.PLAYER_INTEREST_RADIUS = int.Parse(childNode.InnerText);
+                        break;
+                    case "NPCInterstRadius":
+                        AOI.NPC_INTEREST_RADIUS = int.Parse(childNode.InnerText);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
         public class Config
         {
-            public static string DEBUG_PATH = "ABResources/Config";
-            public static string ROOT = "TotalConfig.xml";
+            public static Dictionary<string, string> Id2Type = new Dictionary<string, string>();
+
+            /// <summary>
+            /// 获取目标id的类型
+            /// </summary>
+            /// <param name="id">id</param>
+            /// <returns>id的类型</returns>
+            public static string GetType(string id)
+            {
+                return id.Substring(0, 2);
+            }
+
+            /// <summary>
+            /// 获取目标id在同类中的索引
+            /// </summary>
+            /// <param name="id">id</param>
+            /// <returns>id的索引</returns>
+            public static string GetIndex(string id)
+            {
+                return id.Substring(2);
+            }
         }
+
+        public class AssetBundlePath
+        {
+            public static Dictionary<string, IStoreInAssetBundle> Type2Path = new Dictionary<string, IStoreInAssetBundle>();
+        }
+
+        public class Save
+        {
+            public static string FolderPath;
+        }
+
         public class AOI
         {
             public static float GRID_FIELD = 20;

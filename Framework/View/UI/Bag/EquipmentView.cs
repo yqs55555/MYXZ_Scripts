@@ -56,7 +56,7 @@ namespace MYXZ
             {
                 Init();
             }
-            CurrentEquipment = MYXZGameDataManager.Instance.GetItemOrEquipmentById(equipmentId) as Equipment;
+            CurrentEquipment = MYXZConfigLoader.Instance.GetItem(equipmentId) as Equipment;
             this.mEquipmentName.text = CurrentEquipment.Name;
             return this;
         }

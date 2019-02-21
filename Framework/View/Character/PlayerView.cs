@@ -30,13 +30,6 @@ namespace MYXZ
             { KeyCode.Alpha1, "110001"}
         };
 
-        protected override void Start()
-        {
-            base.Start();
-            WeatherSystem.SetDate(12, 12, 2018);
-            WeatherSystem.ChangeWeatherInstant(12);
-        }
-
         void Update()
         {
             Player.Update();
@@ -50,6 +43,8 @@ namespace MYXZ
             {
                 TryToTalk();
             }
+            //            WeatherSystem.SetDate(12, 12, 2018);
+            //            WeatherSystem.ChangeWeatherInstant(12);
         }
 
         void FixedUpdate()

@@ -42,11 +42,11 @@ namespace MYXZ
         public int BuyPrice { get; private set; }
         public int SalePrice { get; private set; }
 
-        public Item(string name, string id,string spriteID, string itemDescription, string useDescription, int buyPrice, int salePrice)
+        protected Item(string name, string id,string spriteID, string itemDescription, string useDescription, int buyPrice, int salePrice)
         {
             Name = name;
             ID = id;
-            this.Sprite = MYXZGameDataManager.Instance.GetItemSpriteById(spriteID);
+            this.Sprite = MYXZConfigLoader.Instance.GetSprite(spriteID);
             ItemDescription = itemDescription;
             UseDescription = useDescription;
             CanBeSold = true;
@@ -58,7 +58,7 @@ namespace MYXZ
         {
             Name = name;
             ID = id;
-            this.Sprite = MYXZGameDataManager.Instance.GetItemSpriteById(spriteID);
+            this.Sprite = MYXZConfigLoader.Instance.GetSprite(spriteID);
             ItemDescription = itemDescription;
             UseDescription = useDescription;
             CanBeSold = false;

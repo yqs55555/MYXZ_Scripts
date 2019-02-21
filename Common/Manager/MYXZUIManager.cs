@@ -33,14 +33,14 @@ namespace MYXZ
         }
         #endregion
 
-        private Dictionary<UIPanelType, AssetBundle> mTypeToAssetBundle;
-        private Dictionary<UIPanelType, string> mTypeToName;
-        private Dictionary<UIPanelType, BasePanelView> mTypeToPanel;
+        private Dictionary<UIPanelType, BasePanelView> m_type2Panel;
+        private Dictionary<UIPanelType, UIPanelInfo> m_type2Info;
         public Stack<BasePanelView> UIPanelStack;
 
         private void Init()
         {
-            MYXZGameDataManager.Instance.GetUIConfig(out mTypeToAssetBundle, out mTypeToName);
+            this.m_type2Info = MYXZConfigLoader.Instance.GetUIConfig();
+            this.m_type2Panel = new Dictionary<UIPanelType, BasePanelView>(new UITypeCompare());
         }
 
         /// <summary>
@@ -50,20 +50,17 @@ namespace MYXZ
         /// <returns>目标UIPanelView</returns>
         public BasePanelView GetPanel(UIPanelType type)
         {
-            if (mTypeToPanel == null)
+            if (m_type2Panel.ContainsKey(type)) //如果已经实例化过此type的Panel
             {
-                mTypeToPanel = new Dictionary<UIPanelType, BasePanelView>();
+                return m_type2Panel[type];
             }
-            if (mTypeToPanel.ContainsKey(type)) //如果已经实例化过此type的Panel
+            UIPanelInfo info;
+            if (m_type2Info.TryGetValue(type, out info)) //获取此type的UIPanel所在的prefab名字
             {
-                return mTypeToPanel[type];
-            }
-            string path;
-            if (mTypeToName.TryGetValue(type, out path)) //获取此type的UIPanel所在的prefab名字
-            {
-                GameObject creatPanel =
-                    GameObject.Instantiate(mTypeToAssetBundle[type].LoadAsset<GameObject>(path)); //创建该物体
-                mTypeToPanel.Add(type, creatPanel.GetComponent<BasePanelView>());
+                GameObject creatPanel = GameObject.Instantiate(
+                    MYXZAssetBundleManager.Instance.LoadOrGetAssetBundle(info.AssetBundlePath).
+                        LoadAsset<GameObject>(info.Name)); //创建该物体
+                m_type2Panel.Add(type, creatPanel.GetComponent<BasePanelView>());
                 return creatPanel.GetComponent<BasePanelView>();
             }
             else //如果在配置表中没有找到此type对应的UIPanel

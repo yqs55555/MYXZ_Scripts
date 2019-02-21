@@ -8,12 +8,12 @@
  *              修改日期：
  *              修改内容：
  */
-using System.Collections;
-using System.Collections.Generic;
+
+using System;
+using System.Diagnostics;
 using strange.extensions.command.impl;
-using strange.extensions.context.api;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using Debug = UnityEngine.Debug;
 
 namespace MYXZ
 {
@@ -26,8 +26,9 @@ namespace MYXZ
         {
             MYXZUIManager.Instance.PopAllPanel();
             MYXZInput.IsEnable = true;
-            MYXZGameDataManager.Instance.Init();
+            MYXZConfigLoader.Instance.Init(); 
             //ReqLoadArchiveSignal.Dispatch();
+            Setting.Init();
         }
     }
 }

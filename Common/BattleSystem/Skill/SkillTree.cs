@@ -22,10 +22,14 @@ namespace MYXZ
     [Serializable]
     public class SkillTree
     {
+        /// <summary>
+        /// 技能树的根节点
+        /// </summary>
         private readonly SkillRootNode mRootSkillNodes;
         public SkillBase CurrentSkill;
         public KeyCode ShortCut = KeyCode.None;
         public float SkillUsedTime;
+        public MYXZEntity SkillUser;
 
         public string ID
         {
@@ -34,7 +38,7 @@ namespace MYXZ
 
         public SkillTree(string skillTreeId)
         {
-            mRootSkillNodes = MYXZGameDataManager.Instance.GetSkillTreeById(skillTreeId);
+            mRootSkillNodes = MYXZConfigLoader.Instance.GetSkillTree(skillTreeId);
             CurrentSkill = null;
         }
 

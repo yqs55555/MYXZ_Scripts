@@ -8,8 +8,7 @@
  *              修改日期：
  *              修改内容：
  */
-using System.Collections;
-using System.Collections.Generic;
+
 using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 using UnityEngine;
@@ -53,7 +52,7 @@ namespace MYXZ
             {
                 Init();
             }
-            Task = MYXZGameDataManager.Instance.GetTaskById(taskId) as Task;
+            Task = MYXZConfigLoader.Instance.GetTask(taskId) as Task;
             this.mTaskName.text = Task.Name;
             return this;
         }
