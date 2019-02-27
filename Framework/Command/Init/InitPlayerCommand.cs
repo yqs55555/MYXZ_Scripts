@@ -32,7 +32,7 @@ namespace MYXZ
         public AOIInfoModel AOIModel { get; set; }
 
         [Inject]
-        public MapModel MapModel { get; set; }
+        public SceneModel MapModel { get; set; }
 
         public override void Execute()
         {
@@ -44,7 +44,7 @@ namespace MYXZ
             MYXZEntity entity = new MYXZEntity(Player, Setting.AOI.PLAYER_INTEREST_RADIUS);
             entity.RegisterObserver(AOIModel.Update);       //当Entity的AOIPosition发生变化时会通知AOIModel
 
-            entity.UpdatePosition();
+            entity.UpdatePosition();    //初始化调用一次
             int mark = MYXZTimer.Instance.AddTimer(entity.UpdatePosition, Setting.AOI.UPDATE_RATE, -1);    //每隔一段时间更新一次坐标信息
             AOIModel.AddEntityUpdateMark(entity, mark);
             MapModel.AddEntity(Player.TargetGameObject, entity);

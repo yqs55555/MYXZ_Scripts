@@ -24,11 +24,11 @@ namespace MYXZ
     {
         public override void Execute()
         {
+            Setting.Init();
             MYXZUIManager.Instance.PopAllPanel();
             MYXZInput.IsEnable = true;
             MYXZConfigLoader.Instance.Init(); 
             //ReqLoadArchiveSignal.Dispatch();
-            Setting.Init();
         }
     }
 }

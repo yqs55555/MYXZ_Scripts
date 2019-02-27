@@ -48,51 +48,5 @@ namespace MYXZ
             Debug.Log("未找到Id为" + id + "配置文件");
             return "";
         }
-
-        /// <summary>
-        /// 根据技能树的ID来获取一个技能树实例
-        /// </summary>
-        /// <param name="skillId"></param>
-        /// <returns>技能树的根节点</returns>
-        public static SkillRootNode ReadSkillTree(string skillId)
-        {
-
-        }
-
-        /// <summary>
-        /// 从xmlFile中读取此SceneInfo的信息
-        /// </summary>
-        /// <param name="sceneInfo">读取得到的信息out赋值给sceneInfo</param>
-        /// <param name="xmlText">xml的string</param>
-        /// <returns>是否读取成功</returns>
-        public static bool ReadSceneInfo(out SceneInfo sceneInfo, string xmlText)
-        {
-            sceneInfo = new SceneInfo();
-            XmlDocument doc = new XmlDocument();
-            try
-            {
-                doc.LoadXml(xmlText); //读取此XML字符串至doc
-            }
-            catch (XmlException e)
-            {
-                Debug.LogException(e);
-                return false;
-            }
-
-            XmlNode sceneInfoNode = doc.FirstChild; //获取SceneInfo节点
-            sceneInfo.Name = sceneInfoNode.Attributes["Name"].Value; //获取当前场景的名称
-            sceneInfo.Id = sceneInfoNode.Attributes["Id"].Value; //获取当前场景的Id
-
-            foreach (XmlNode node in sceneInfoNode.ChildNodes)
-            {
-                if (node.Name.Equals("NPC"))
-                {
-                    sceneInfo.Npcs = node.Attributes["Id"].Value.Split(','); //获取当前场景所有NPC的ID
-                }
-            }
-            return true;
-        }
-
-
     }
 }

@@ -62,14 +62,18 @@ namespace MYXZ
         {
             if (!mAllAssetBundles.ContainsKey(path))
             {
-                AssetBundle ab = AssetBundle.LoadFromFile(System.IO.Path.Combine(Application.streamingAssetsPath, path));
+                AssetBundle ab = AssetBundle.LoadFromFile(
+                    System.IO.Path.Combine(Setting.BASE_ASSET_BUNDLE_PATH, path)
+                    );
                 mAllAssetBundles.Add(path, ab);
                 string[] allDependencies = mStreamingAssetManifest.GetAllDependencies(path);     //获取所有依赖包名
                 foreach (string dependency in allDependencies)                                  //加载所有依赖包 
                 {
                     if (!mAllAssetBundles.ContainsKey(dependency))
                     {
-                        mAllAssetBundles.Add(dependency, AssetBundle.LoadFromFile(System.IO.Path.Combine(Application.streamingAssetsPath, dependency)));
+                        mAllAssetBundles.Add(dependency, AssetBundle.LoadFromFile(
+                            System.IO.Path.Combine(Setting.BASE_ASSET_BUNDLE_PATH, dependency)
+                            ));
                     }
                     if (!mDependenciesUse.ContainsKey(dependency))  //如果此前没有AssetBundle引用了这个依赖，添加它，否则，引用次数加1
                     {

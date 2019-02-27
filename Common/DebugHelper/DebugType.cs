@@ -1,7 +1,7 @@
 ﻿/*
- * FileName             : SceneInfo.cs
+ * FileName             : DebugType.cs
  * Author               : yqs
- * Creat Date           : 2018.2.24
+ * Creat Date           : 2019.2.25
  * Revision History     : 
  *          R1: 
  *              修改作者：
@@ -14,15 +14,9 @@ using UnityEngine;
 
 namespace MYXZ
 {
-    public class SceneInfo
+    public enum DebugType 
     {
-        public string Name;
-        public string Id;
-        public Vector2Int MapBegin;
-        public Vector2Int MapEnd;
-
-        public SceneInfo()
-        {
-        }
+        Log = 0,
+        Error
     }
 }

@@ -1,5 +1,5 @@
 ﻿/*
- * FileName             : AOIInterestList.cs
+ * FileName             : AOIInterests.cs
  * Author               : yqs
  * Creat Date           : 2019.2.16
  * Revision History     : 
@@ -17,11 +17,11 @@ namespace MYXZ
     /// <summary>
     /// 感兴趣物体的集合
     /// </summary>
-    public class AOIInterestList : IEnumerable<GameObject>
+    public class AOIInterests : IEnumerable<GameObject>
     {
         private List<MYXZGrid> m_interestGrids;
 
-        public AOIInterestList()
+        public AOIInterests()
         {
             m_interestGrids = new List<MYXZGrid>();
         }

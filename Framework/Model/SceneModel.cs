@@ -14,11 +14,11 @@ using UnityEngine;
 
 namespace MYXZ
 {
-    public class MapModel
+    public class SceneModel
     {
         private Dictionary<GameObject, MYXZEntity> m_gameObject2Entity;
 
-        public MapModel()
+        public SceneModel()
         {
             m_gameObject2Entity = new Dictionary<GameObject, MYXZEntity>();
         }

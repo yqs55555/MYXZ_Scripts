@@ -1,5 +1,5 @@
 ﻿/*
- * FileName             : EquipmentFactory.cs
+ * FileName             : ItemFactory.cs
  * Author               : yqs
  * Creat Date           : 2019.2.19
  * Revision History     : 

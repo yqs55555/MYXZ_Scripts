@@ -12,8 +12,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using strange.extensions.command.impl;
-using strange.extensions.mediation.impl;
 using UnityEngine;
 
 namespace MYXZ
@@ -47,16 +45,16 @@ namespace MYXZ
 
             if (entity.IsDirty)    //当Entity的AOI坐标发生变化后会被标记为Dirty，此后第一次调用此方法需要更新信息
             {
-                AOIInterestList entityInterestEnumerable;
+                AOIInterests entityInterestEnumerable;
                 if (m_entityInterests.ContainsKey(entity))  //如果已经创建过此entity的感兴趣物体迭代器
                 {
-                    entityInterestEnumerable = m_entityInterests[entity] as AOIInterestList;
+                    entityInterestEnumerable = m_entityInterests[entity] as AOIInterests;
                     entityInterestEnumerable.Clear();
                     RefreshEntityInterests(entity, entityInterestEnumerable);
                 }
                 else
                 {
-                    entityInterestEnumerable = new AOIInterestList();
+                    entityInterestEnumerable = new AOIInterests();
                     RefreshEntityInterests(entity, entityInterestEnumerable);
                     m_entityInterests.Add(entity, entityInterestEnumerable);
                 }
@@ -65,7 +63,7 @@ namespace MYXZ
             return m_entityInterests[entity];
         }
 
-        private void RefreshEntityInterests(MYXZEntity entity, AOIInterestList enumerable)
+        private void RefreshEntityInterests(MYXZEntity entity, AOIInterests enumerable)
         {
             for (int x = entity.LocatedGridPosition.x - entity.InterstRadius;
                 x < 2 * entity.InterstRadius; x++)  //正方形的感兴趣范围

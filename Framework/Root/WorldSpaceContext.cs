@@ -62,7 +62,7 @@ namespace MYXZ
             #region Model
             injectionBinder.Bind<PlayerInfoModel>().ToSingleton();  //角色信息
 			injectionBinder.Bind<AOIInfoModel>().ToSingleton();//AOI信息
-            injectionBinder.Bind<MapModel>().ToSingleton();
+            injectionBinder.Bind<SceneModel>().ToSingleton();
             #endregion
 
             #region Mediator

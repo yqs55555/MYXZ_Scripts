@@ -27,7 +27,7 @@ namespace MYXZ
 
         IEnumerator DelayFunc(Action func, float delay, int repeat, int mark)
         {
-            WaitForSeconds waitTime = new WaitForSeconds(delay);
+            WaitForSeconds waitTime = new WaitForSeconds(delay);    
             while (repeat-- != 0)
             {
                 yield return waitTime;

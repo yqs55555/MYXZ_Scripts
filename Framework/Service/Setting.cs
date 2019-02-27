@@ -20,38 +20,44 @@ namespace MYXZ
     public class Setting
     {
         private const string ROOT_CONFIG_PATH = "Setting.xml";
-        private static readonly string BASE_PATH =
+        public static readonly string BASE_PATH =
 #if UNITY_EDITOR
             Path.Combine(Application.dataPath, "ABResources/Config");
 #else
             Application.dataPath;
 #endif
         public static readonly string BASE_ASSET_BUNDLE_PATH = Application.streamingAssetsPath;
+        private static bool m_hasInit = false;
 
+        #region InitMembers
         public static void Init()
         {
-            XmlDocument xml = new XmlDocument();
-            xml.LoadXml(new StreamReader(Path.Combine(BASE_PATH, ROOT_CONFIG_PATH)).ReadToEnd());
-
-            XmlNode setting = xml.FirstChild;
-            foreach (XmlNode node in setting.ChildNodes)
+            if (!m_hasInit)
             {
-                switch (node.Name)
+                m_hasInit = true;
+                XmlDocument xml = new XmlDocument();
+                xml.LoadXml(new StreamReader(Path.Combine(BASE_PATH, ROOT_CONFIG_PATH)).ReadToEnd());
+
+                XmlNode setting = xml.FirstChild;
+                foreach (XmlNode node in setting.ChildNodes)
                 {
-                    case "Type":
-                        InitConfig(node);
-                        break;
-                    case "AssetBundlePath":
-                        InitAssetBundlePath(node);
-                        break;
-                    case "Save":
-                        InitSave(node);
-                        break;
-                    case "AOI":
-                        InitAOI(node);
-                        break;
-                    default:
-                        break;
+                    switch (node.Name)
+                    {
+                        case "Type":
+                            InitConfig(node);
+                            break;
+                        case "AssetBundlePath":
+                            InitAssetBundlePath(node);
+                            break;
+                        case "Save":
+                            InitSave(node);
+                            break;
+                        case "AOI":
+                            InitAOI(node);
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }
@@ -60,7 +66,10 @@ namespace MYXZ
         {
             foreach (XmlNode childNode in configNode.ChildNodes)
             {
-                Config.Id2Type.Add(childNode.Attributes["Id"].Value, childNode.Attributes["Type"].Value);
+                Config.Id2Type.Add(
+                    childNode.Attributes["Id"].Value,
+                    childNode.Attributes["Type"].Value
+                    );
             }
         }
 
@@ -76,11 +85,9 @@ namespace MYXZ
                 {
                     switch (childNodeChildNode.Name)
                     {
-                        case "Chunk":
-                            {
-                                chunk = Int32.Parse(childNodeChildNode.InnerText);
-                                break;
-                            }
+                        case "Chunk":       //如果存在分块这个属性
+                            chunk = Int32.Parse(childNodeChildNode.InnerText);
+                            break;
                     }
                 }
                 storeInAssetBundleRes = new StoreInAssetBundleResource(type, path, chunk);
@@ -126,6 +133,7 @@ namespace MYXZ
                 }
             }
         }
+        #endregion
 
         public class Config
         {

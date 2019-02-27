@@ -1,5 +1,5 @@
 ﻿/*
- * FileName             : NPCFactory.cs
+ * FileName             : NPCInfoFactory.cs
  * Author               : yqs
  * Creat Date           : 2019.2.21
  * Revision History     : 
@@ -8,30 +8,26 @@
  *              修改日期：
  *              修改内容：
  */
-using System.Collections;
-using System.Collections.Generic;
+
 using System.Xml;
 using UnityEngine;
 
 namespace MYXZ
 {
-    public class NPCFactory : IConfigFactory<NpcInfo>
+    public class NPCInfoFactory : IConfigFactory<NpcInfo>
     {
         private AssetBundle m_assetBundle;
 
-        public NPCFactory(AssetBundle assetBundle)
+        public NPCInfoFactory(AssetBundle assetBundle)
         {
             this.m_assetBundle = assetBundle;
         }
 
         public NpcInfo Create(string id)
         {
-            NpcInfo npcInfo = new NpcInfo();
-
             TextAsset npcText = m_assetBundle.LoadAsset<TextAsset>(id);
             if (npcText == null)
             {
-                Debug.LogError("无法找到id为" + id + "的NPC的信息");
                 return null;
             }
 
@@ -45,7 +41,7 @@ namespace MYXZ
                 Debug.LogException(e);
                 return null;
             }
-
+            NpcInfo npcInfo = new NpcInfo();
             XmlNode npcNode = doc.FirstChild;                   //取得此NPC节点
 
             npcInfo.Name = npcNode.Attributes["Name"].Value;    //此NPC的名字

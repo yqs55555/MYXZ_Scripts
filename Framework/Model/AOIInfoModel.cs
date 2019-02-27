@@ -38,9 +38,22 @@ namespace MYXZ
 
         private Dictionary<MYXZEntity, int> m_entityUpdateMark;
 
+        public class Vector2IntComparer : IEqualityComparer<Vector2Int>
+        {
+            public bool Equals(Vector2Int x, Vector2Int y)
+            {
+                return x == y;
+            }
+
+            public int GetHashCode(Vector2Int obj)
+            {
+                return obj.GetHashCode();
+            }
+        }
+
         public AOIInfoModel()
         {
-            AllGrids = new Dictionary<Vector2Int, MYXZGrid>(100);
+            AllGrids = new Dictionary<Vector2Int, MYXZGrid>(100, new Vector2IntComparer());
             this.m_entityUpdateMark = new Dictionary<MYXZEntity, int>();
             UpdateMapInfo(new Vector2Int(0,0), new Vector2Int(160,160));
         }
@@ -96,7 +109,7 @@ namespace MYXZ
 
             if (!AllGrids.ContainsKey(entity.LocatedGridPosition))  //
             {
-                Debug.LogError("正在访问不存在的Gird" + entity.LocatedGridPosition);
+                DebugHelper.Log("正在访问不存在的Grid" + entity.LocatedGridPosition, DebugType.Error);
                 return;
             }
 

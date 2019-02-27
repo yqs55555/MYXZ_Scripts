@@ -27,7 +27,7 @@ namespace MYXZ
         public AOIInfoModel AOIInfoModel { get; set; }
 
         [Inject]
-        public MapModel MapModel { get; set; }
+        public SceneModel MapModel { get; set; }
 
         public override void Execute()
         {

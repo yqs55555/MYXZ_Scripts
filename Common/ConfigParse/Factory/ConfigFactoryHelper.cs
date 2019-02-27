@@ -38,6 +38,10 @@ namespace MYXZ
         public static Dictionary<string, int> GetIdsWithCount(string content)
         {
             Dictionary<string, int> dictionary = new Dictionary<string, int>();
+            if (content.Equals(""))
+            {
+                return dictionary;
+            }
 
             string[] items = content.Split(',');
             foreach (string item in items)
