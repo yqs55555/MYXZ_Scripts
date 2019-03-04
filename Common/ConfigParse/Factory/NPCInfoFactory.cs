@@ -47,7 +47,7 @@ namespace MYXZ
             npcInfo.Name = npcNode.Attributes["Name"].Value;    //此NPC的名字
             npcInfo.Id = npcNode.Attributes["Id"].Value;        //此NPC的ID
             string spriteId = npcNode.Attributes["Sprite"].Value;
-            npcInfo.Sprite = MYXZConfigLoader.Instance.GetHeadSpriteById(spriteId);
+            npcInfo.Sprite = MYXZConfigLoader.Instance.GetSprite(spriteId);
 
             foreach (XmlNode node in npcNode.ChildNodes)
             {

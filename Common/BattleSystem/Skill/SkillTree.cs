@@ -26,10 +26,12 @@ namespace MYXZ
         /// 技能树的根节点
         /// </summary>
         private readonly SkillRootNode mRootSkillNodes;
-        public SkillBase CurrentSkill;
+        /// <summary>
+        /// 技能释放时的产生的协程
+        /// </summary>
+        public int SkillMark;
         public KeyCode ShortCut = KeyCode.None;
-        public float SkillUsedTime;
-        public MYXZEntity SkillUser;
+        public SkillUser User;
 
         public string ID
         {
@@ -39,16 +41,21 @@ namespace MYXZ
         public SkillTree(string skillTreeId)
         {
             mRootSkillNodes = MYXZConfigLoader.Instance.GetSkillTree(skillTreeId);
-            CurrentSkill = null;
         }
 
-        public void Use(MYXZEntity entity)
+        public void Use()
         {
-//            if (entity.Transform.GetComponent<CharacterView>().Character.CurrentSkill != null)
-//            {
-//                return;
-//            }
-            mRootSkillNodes.Use(entity);
+            
+            mRootSkillNodes.Use();
+        }
+
+        /// <summary>
+        /// 外界试图终止技能
+        /// </summary>
+        /// <returns>终止成功返回True</returns>
+        public bool Stop()
+        {
+            return false;
         }
     }
 }

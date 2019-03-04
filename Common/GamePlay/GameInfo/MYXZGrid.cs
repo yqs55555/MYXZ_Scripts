@@ -85,16 +85,5 @@ namespace MYXZ
         {
             return GetEnumerator();
         }
-
-        public override string ToString()
-        {
-            string res = "";
-            foreach (MYXZEntity entity in m_existEntityList)
-            {
-                res += entity.Transform.name + "\n";
-            }
-
-            return res;
-        }
     }
 }

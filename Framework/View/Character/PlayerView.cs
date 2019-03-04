@@ -8,7 +8,6 @@
  *              修改日期：
  *              修改内容：
  */
-using System.Collections;
 using System.Collections.Generic;
 using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;

@@ -17,37 +17,40 @@ namespace MYXZ
     /// <summary>
     /// 感兴趣物体的集合
     /// </summary>
-    public class AOIInterests : IEnumerable<GameObject>
+    public class EntityCollection<T> : IEnumerable<MYXZEntity> where T : IEnumerable<MYXZEntity>
     {
-        private List<MYXZGrid> m_interestGrids;
+        /// <summary>
+        /// 此处list较大概率频繁修改，故使用LinkedList
+        /// </summary>
+        private LinkedList<T> m_list;
 
-        public AOIInterests()
+        public EntityCollection()
         {
-            m_interestGrids = new List<MYXZGrid>();
+            m_list = new LinkedList<T>();
         }
 
-        public void Add(MYXZGrid grid)
+        public void Add(T item)
         {
-            m_interestGrids.Add(grid);
+            m_list.AddFirst(item);
         }
 
-        public void Remove(MYXZGrid grid)
+        public void Remove(T item)
         {
-            m_interestGrids.Remove(grid);
+            m_list.Remove(item);
         }
 
         public void Clear()
         {
-            m_interestGrids.Clear();
+            m_list.Clear();
         }
 
-        public IEnumerator<GameObject> GetEnumerator()
+        public IEnumerator<MYXZEntity> GetEnumerator()
         {
-            for (int i = 0; i < m_interestGrids.Count; i++)
+            foreach (T item in m_list)
             {
-                foreach (MYXZEntity entity in m_interestGrids[i])
+                foreach (MYXZEntity entity in item)
                 {
-                    yield return entity.Transform.gameObject;
+                    yield return entity;
                 }
             }
         }

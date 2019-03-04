@@ -22,6 +22,7 @@ namespace MYXZ
         private readonly string m_id;
         protected List<SkillNode> ChildSkillNodes;
         protected int NextUse;
+        protected SkillTree SkillTree;
 
         public string Id
         {
@@ -33,7 +34,7 @@ namespace MYXZ
             m_id = id;
         }
 
-        public abstract SkillNodeState Use(MYXZEntity skillUser);
+        public abstract SkillNodeState Use();
 
         public void AddChildNode(SkillNode skillNode)
         {

@@ -26,7 +26,7 @@ namespace MYXZ
         /// <summary>
         /// 此技能的攻击区域
         /// </summary>
-        private TargetPicker mTargetPicker;
+        private TargetPicker m_targetPicker;
 
         public string AnimationName
         {
@@ -40,16 +40,17 @@ namespace MYXZ
         private readonly string mAnimationName;
         private readonly float mSkillTime;
 
-        public SkillBase(string id, TargetPicker targetPicker,string animationName, float skillTime) : base(id)
+        public SkillBase(string id, TargetPicker targetPicker,
+            string animationName, float skillTime) : base(id)
         {
-            mTargetPicker = targetPicker;
+            this.m_targetPicker = targetPicker;
             this.mAnimationName = animationName;
             this.mSkillTime = skillTime;
         }
 
-        public override SkillNodeState Use(MYXZEntity skillUser)
+        public override SkillNodeState Use()
         {
-            SkillEnter(skillUser);
+            SkillEnter();
             List<Transform> interests = new List<Transform>();
 //            foreach (Entity entity in skillUser.CurrentInterestEntityList)
 //            {
@@ -63,26 +64,26 @@ namespace MYXZ
             {
                 interests = null;
             }
-            List<Transform> attackTargets = mTargetPicker.Pick(skillUser.Transform, interests);
-            if (attackTargets != null)
-            {
-                foreach (Transform attackTarget in attackTargets)
-                {
-                    if (attackTarget.CompareTag("Player") || attackTarget.CompareTag("Monster"))
-                    {
-                        //attackTarget.GetComponent<CharacterView>().BeAttacked(skillUser.Transform, this);
-                    }
-                    //Debug.Log(attackTarget.name + " Get Attacked(怪物AI中怪物受到攻击请在这里设定)");
-                }
-            }
+//            List<Transform> attackTargets = mTargetPicker.Pick(SkillTree.User.Entity.Transform, interests);
+//            if (attackTargets != null)
+//            {
+//                foreach (Transform attackTarget in attackTargets)
+//                {
+//                    if (attackTarget.CompareTag("Player") || attackTarget.CompareTag("Monster"))
+//                    {
+//                        //attackTarget.GetComponent<CharacterView>().BeAttacked(skillUser.Transform, this);
+//                    }
+//                    //Debug.Log(attackTarget.name + " Get Attacked(怪物AI中怪物受到攻击请在这里设定)");
+//                }
+//            }
             return SkillNodeState.Finish;      //代表当前技能节点是可以施放的
         }
         /// <summary>
         /// 开始这个技能
         /// </summary>
-        private void SkillEnter(MYXZEntity skillUser)
+        private void SkillEnter()
         {
-            skillUser.Transform.GetComponent<Animator>().Play(this.mAnimationName);
+            // skillUser.Transform.GetComponent<Animator>().Play(this.mAnimationName);
             //skillUser.Transform.GetComponent<CharacterView>().Character.SetCurrentSkill(this);
         }
 

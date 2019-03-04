@@ -26,12 +26,12 @@ namespace MYXZ
             this.NextUse = 0;
         }
 
-        public override SkillNodeState Use(MYXZEntity skillUser)
+        public override SkillNodeState Use()
         {
             SkillNodeState currentNodeState = SkillNodeState.FailToRun;
             for (int i = 0; i < ChildSkillNodes.Count; i++)
             {
-                SkillNodeState childTreeState = ChildSkillNodes[NextUse].Use(skillUser);
+                SkillNodeState childTreeState = ChildSkillNodes[NextUse].Use();
                 if (childTreeState == SkillNodeState.FailToRun)         //如果本次执行的子技能节点无法释放
                 {
                     NextUse = (NextUse + 1) % ChildSkillNodes.Count;    //下一次进入时执行下一个子技能节点

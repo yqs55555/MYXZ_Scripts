@@ -19,7 +19,7 @@ using Random = UnityEngine.Random;
 namespace MYXZ
 {
     /// <summary>
-    /// 计时器
+    /// 计时器，mark为0为预留位
     /// </summary>
     public class MYXZTimer : Singleton<MYXZTimer>
     {
@@ -62,7 +62,7 @@ namespace MYXZ
             {
                 randomMark = Random.Range(Int32.MinValue, Int32.MaxValue);
             }
-            while (m_marks.Keys.Contains(randomMark));
+            while (m_marks.Keys.Contains(randomMark) || randomMark == 0);
             Coroutine coro = StartCoroutine(DelayFunc(func, delay, repeat, randomMark));
             m_marks.Add(randomMark, coro);
             return randomMark;
@@ -78,6 +78,16 @@ namespace MYXZ
             {
                 StopCoroutine(m_marks[mark]);
             }
+        }
+
+        /// <summary>
+        /// 标记为mark的协程是否正在运行
+        /// </summary>
+        /// <param name="mark">协程的标记</param>
+        /// <returns>若正在运行返回true</returns>
+        public bool IsRunning(int mark)
+        {
+            return mark != 0 || this.m_marks.ContainsKey(mark);
         }
     }
 }

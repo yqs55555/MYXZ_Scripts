@@ -1,7 +1,7 @@
 ﻿/*
- * FileName             : TargetPicker.cs
+ * FileName             : SkillUser.cs
  * Author               : yqs
- * Creat Date           : 2018.9.26
+ * Creat Date           : 2019.3.2
  * Revision History     : 
  *          R1: 
  *              修改作者：
@@ -14,11 +14,9 @@ using UnityEngine;
 
 namespace MYXZ
 {
-    /// <summary>
-    /// 攻击区域
-    /// </summary>
-    public abstract class TargetPicker
+    public class SkillUser
     {
-        public abstract List<Transform> Pick(Transform player, List<Transform> targets);
+        public MYXZEntity Entity;
+        public IEnumerable<GameObject> InterestGameObjects;
     }
 }

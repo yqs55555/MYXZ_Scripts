@@ -24,12 +24,12 @@ namespace MYXZ
             NextUse = 0;
         }
 
-        public override SkillNodeState Use(MYXZEntity skillUser)
+        public override SkillNodeState Use()
         {
             SkillNodeState currentNodeState = SkillNodeState.FailToRun;
             for (int i = 0; i < ChildSkillNodes.Count; i++)
             {
-                if (ChildSkillNodes[NextUse].Use(skillUser) == SkillNodeState.Finish)   //此子技能可以释放
+                if (ChildSkillNodes[NextUse].Use() == SkillNodeState.Finish)   //此子技能可以释放
                 {
                     currentNodeState = SkillNodeState.Running;                          //此节点的子节点正在释放
                     NextUse = (NextUse + 1) % ChildSkillNodes.Count;
@@ -37,7 +37,7 @@ namespace MYXZ
                     {
                         currentNodeState = SkillNodeState.Finish;
                     }
-                    break;
+                    break; 
                 }
                 NextUse = (NextUse + 1) % ChildSkillNodes.Count;
             }

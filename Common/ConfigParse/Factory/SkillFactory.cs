@@ -58,7 +58,7 @@ namespace MYXZ
         /// </summary>
         /// <param name="skillNode"></param>
         /// <param name="xmlNode"></param>
-        private static void TraverseToGetSkillTree(SkillNode skillNode, XmlNode xmlNode)
+        private void TraverseToGetSkillTree(SkillNode skillNode, XmlNode xmlNode)
         {
             if (xmlNode.HasChildNodes)
             {
@@ -86,14 +86,12 @@ namespace MYXZ
         /// </summary>
         /// <param name="skillBaseId"></param>
         /// <returns></returns>
-        private static SkillBase GetSkillBase(string skillBaseId)
+        private SkillBase GetSkillBase(string skillBaseId)
         {
             XmlDocument doc = new XmlDocument();
             try
             {
-                doc.LoadXml(MYXZAssetBundleManager.Instance.LoadOrGetAssetBundle(
-                    MYXZXmlReader.GetConfigAssetBundlePath("Skill")
-                    ).LoadAsset<TextAsset>(skillBaseId).text);   //读取此XML字符串至doc
+                doc.LoadXml(m_assetBundle.LoadAsset<TextAsset>(skillBaseId).text);   //读取此XML字符串至doc
             }
             catch (XmlException e)
             {

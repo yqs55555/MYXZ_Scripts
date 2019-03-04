@@ -62,10 +62,14 @@ namespace MYXZ
 
         private AssetBundle GetAssetBundle(string id)
         {
-            IStoreInAssetBundle storeInfo = Setting.AssetBundlePath.Type2Path[
-                Setting.Config.Id2Type[Setting.Config.GetType(id)]];
-            DebugHelper.Assertion(storeInfo == null, 
-                "目标ID为" + id + "的config不存在或者不存储在AssetBundle中");
+            IStoreInAssetBundle storeInfo = Setting.AssetBundlePath.Type2StoreInfo[
+                Setting.Config.Id2Type[Setting.Config.GetTypeId(id)]];
+            if (!DebugHelper.Assertion(storeInfo != null,
+                "目标ID为" + id + "的config不存在或者不存储在AssetBundle中"))
+            {
+                DebugHelper.Log("Type ID：" + Setting.Config.GetTypeId(id));
+                DebugHelper.Log("Type ： " + Setting.Config.Id2Type[Setting.Config.GetTypeId(id)]);
+            }
             return MYXZAssetBundleManager.Instance.LoadOrGetAssetBundle(
                 storeInfo.GetAssetBundlePath(Setting.Config.GetIndex(id))
             );
@@ -88,7 +92,10 @@ namespace MYXZ
                 MYXZAssetBundleManager.Instance.Unload(assetBundle.name, delay:60); 
 
                 item = factory.Create(id);
-                DebugHelper.Assertion(item == null, "目标ID为" + id + "的Item不存在");
+                if (!DebugHelper.Assertion(item != null, "目标ID为" + id + "的Item不存在"))
+                {
+                    return null;
+                }
                 this.m_id2ItemDic.Add(id, item);
             }
 
@@ -113,7 +120,10 @@ namespace MYXZ
                 MYXZAssetBundleManager.Instance.Unload(assetBundle.name, delay: 60);
 
                 info = factory.Create(id);
-                DebugHelper.Assertion(info == null, "目标ID为" + id + "的NPCInfo不存在");
+                if (!DebugHelper.Assertion(info != null, "目标ID为" + id + "的NPCInfo不存在"))
+                {
+                    return null;
+                }
                 this.m_id2NpcInfoDic.Add(id, info);
             }
             return info;
@@ -137,7 +147,10 @@ namespace MYXZ
                 MYXZAssetBundleManager.Instance.Unload(assetBundle.name, delay: 60);
 
                 task = factory.Create(id);
-                DebugHelper.Assertion(task == null, "目标ID为" + id + "的Task不存在");
+                if (!DebugHelper.Assertion(task != null, "目标ID为" + id + "的Task不存在"))
+                {
+                    return null;
+                }
                 this.m_id2TaskDic.Add(id, task);
             }
             return task;
@@ -158,7 +171,10 @@ namespace MYXZ
                 IConfigFactory<SkillRootNode> factory = new SkillFactory(assetBundle);
 
                 skillRootNode = factory.Create(id);
-                DebugHelper.Assertion(skillRootNode == null, "目标ID为" + id + "的Skill不存在");
+                if (!DebugHelper.Assertion(skillRootNode != null, "目标ID为" + id + "的Skill不存在"))
+                {
+
+                }
                 MYXZAssetBundleManager.Instance.Unload(assetBundle.name, delay: 60);
                 //this.m_id2SkillNode.Add(id, skillRootNode);
             }
@@ -180,7 +196,10 @@ namespace MYXZ
 
                 sceneInfo = factory.Create(id);
                 MYXZAssetBundleManager.Instance.Unload(assetBundle.name);
-                DebugHelper.Assertion(sceneInfo == null, "目标ID为" + id + "的Scene不存在");
+                if (!DebugHelper.Assertion(sceneInfo == null, "目标ID为" + id + "的Scene不存在"))
+                {
+                    return null;
+                }
                 this.m_id2SceneInfoDic.Add(id, sceneInfo);
             }
             return sceneInfo;
@@ -199,20 +218,13 @@ namespace MYXZ
 
                 IConfigFactory<Sprite> factory = new SpriteFactory(assetBundle);
                 Sprite sprite = factory.Create(id);
-                DebugHelper.Assertion(sprite == null, "目标ID为" + id + "的Sprite不存在");
+                if (!DebugHelper.Assertion(sprite == null, "目标ID为" + id + "的Sprite不存在"))
+                {
+                    return null;
+                }
                 this.m_id2SpriteDic.Add(id, sprite);
             }
             return m_id2SpriteDic[id];
-        }
-
-        public Sprite GetHeadSpriteById(string spriteId)
-        {
-            if (!this.m_id2SpriteDic.ContainsKey(spriteId))
-            {
-                Sprite sprite = MYXZAssetBundleManager.Instance.LoadOrGetAssetBundle(MYXZXmlReader.GetConfigAssetBundlePath("HeadSprite")).LoadAsset<Sprite>(spriteId);
-                this.m_id2SpriteDic.Add(spriteId, sprite);
-            }
-            return m_id2SpriteDic[spriteId];
         }
 
         /// <summary>
@@ -223,7 +235,7 @@ namespace MYXZ
         {
             var dictionary = new Dictionary<UIPanelType, UIPanelInfo>(new UITypeCompare());
             AssetBundle uiConfigAssetBundle = MYXZAssetBundleManager.Instance.LoadOrGetAssetBundle(
-                Setting.AssetBundlePath.Type2Path["UI"].GetAssetBundlePath()
+                Setting.AssetBundlePath.Type2StoreInfo["UI"].GetAssetBundlePath()
                 );
             TextAsset uiConfig = uiConfigAssetBundle.LoadAsset<TextAsset>("UIConfig");
             List<UIPanelInfo> uiPanelInfos = JsonConvert.DeserializeObject<List<UIPanelInfo>>(uiConfig.text);

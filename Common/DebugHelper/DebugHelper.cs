@@ -16,12 +16,14 @@ namespace MYXZ
 {
     public class DebugHelper
     {
-        public static void Assertion(bool errorCondition, string errorMsg)
+        public static bool Assertion(bool passCondition, string errorMsg)
         {
-            if (!errorCondition)
+            if (!passCondition)
             {
                 Log(errorMsg, DebugType.Error);
             }
+
+            return passCondition;
         }
 
         public static void Log(string msg, DebugType type = DebugType.Log)
@@ -33,6 +35,21 @@ namespace MYXZ
                     break;
                 case DebugType.Error:
                     Debug.LogError(msg);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public static void Log(string msg, GameObject gameObject, DebugType type = DebugType.Log)
+        {
+            switch (type)
+            {
+                case DebugType.Log:
+                    Debug.Log(msg, gameObject);
+                    break;
+                case DebugType.Error:
+                    Debug.LogError(msg, gameObject);
                     break;
                 default:
                     break;

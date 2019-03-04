@@ -30,20 +30,20 @@ namespace MYXZ
             this.mViewAngle = viewAngle;
         }
         
-        public override List<Transform> Pick(Transform player, List<Transform> targets)
+        public override LinkedList<MYXZEntity> Pick(Transform player, IEnumerable<MYXZEntity> targets)
         {
             if (targets == null)
                 return null;
-            List<Transform> results = new List<Transform>();
-            foreach (Transform target in targets)
+            this.Targets.Clear();
+            foreach (MYXZEntity entity in targets)
             {
-                if (MYXZMath.IsInPointArea(player.position, player.forward, target.position, mMinDistance, mMaxDistance,
+                if (MYXZMath.IsInPointArea(player.position, player.forward, entity.Transform.position, mMinDistance, mMaxDistance,
                     mViewAngle))
                 {
-                    results.Add(target);
+                    this.Targets.AddFirst(entity);
                 }
             }
-            return results;
+            return this.Targets;
         }
     }
 }

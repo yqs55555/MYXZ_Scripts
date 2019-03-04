@@ -48,7 +48,7 @@ namespace MYXZ
             SkillTree targetSkillTree = mGo2Skills[skillUser].Find(skillTree => skillTree.ShortCut == input);
             if (targetSkillTree != null)
             {
-//                targetSkillTree.Use(AoiService.GetEntity(skillUser.transform));
+                targetSkillTree.Use();
             }
         }
     }

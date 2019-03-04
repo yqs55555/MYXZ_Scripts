@@ -24,14 +24,22 @@ namespace MYXZ
         [Inject]
         public AOIInfoModel AOIInfoModel { get; set; }
 
+        [Inject]
+        public SceneModel SceneModel { get; set; }
+
         /// <summary>
         /// 这个Entity感兴趣的物体的迭代器，按需创建
         /// </summary>
-        private Dictionary<MYXZEntity, IEnumerable<GameObject>> m_entityInterests;
+        private Dictionary<MYXZEntity, IEnumerable<MYXZEntity>> m_entityInterests;
 
         public AOIService()
         {
-            m_entityInterests = new Dictionary<MYXZEntity, IEnumerable<GameObject>>();
+            m_entityInterests = new Dictionary<MYXZEntity, IEnumerable<MYXZEntity>>();
+        }
+
+        public IEnumerable<MYXZEntity> InterestEntitys(GameObject gameObject)
+        {
+            return InterestEntitys(SceneModel[gameObject]);
         }
 
         /// <summary>
@@ -39,22 +47,22 @@ namespace MYXZ
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public IEnumerable<GameObject> InterestGameObjects(MYXZEntity entity)
+        public IEnumerable<MYXZEntity> InterestEntitys(MYXZEntity entity)
         {
             //采用返回迭代器的方式来返回相较List可以免去频繁查询下的GC
 
             if (entity.IsDirty)    //当Entity的AOI坐标发生变化后会被标记为Dirty，此后第一次调用此方法需要更新信息
             {
-                AOIInterests entityInterestEnumerable;
+                EntityCollection<MYXZGrid> entityInterestEnumerable;
                 if (m_entityInterests.ContainsKey(entity))  //如果已经创建过此entity的感兴趣物体迭代器
                 {
-                    entityInterestEnumerable = m_entityInterests[entity] as AOIInterests;
+                    entityInterestEnumerable = m_entityInterests[entity] as EntityCollection<MYXZGrid>;
                     entityInterestEnumerable.Clear();
                     RefreshEntityInterests(entity, entityInterestEnumerable);
                 }
                 else
                 {
-                    entityInterestEnumerable = new AOIInterests();
+                    entityInterestEnumerable = new EntityCollection<MYXZGrid>();
                     RefreshEntityInterests(entity, entityInterestEnumerable);
                     m_entityInterests.Add(entity, entityInterestEnumerable);
                 }
@@ -63,7 +71,7 @@ namespace MYXZ
             return m_entityInterests[entity];
         }
 
-        private void RefreshEntityInterests(MYXZEntity entity, AOIInterests enumerable)
+        private void RefreshEntityInterests(MYXZEntity entity, EntityCollection<MYXZGrid> enumerable)
         {
             for (int x = entity.LocatedGridPosition.x - entity.InterstRadius;
                 x < 2 * entity.InterstRadius; x++)  //正方形的感兴趣范围

@@ -12,12 +12,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Profiling;
 
 namespace MYXZ
 {
+    /// <summary>
+    /// 在游戏后台中Character实际上的对应的class
+    /// </summary>
     public class MYXZEntity : IObservable<Vector2Int>
     {
         /// <summary>
@@ -62,12 +64,18 @@ namespace MYXZ
         }
 
         private bool m_isDirty;
+        /// <summary>
+        /// 位置发生变化而其相关信息尚未发生变化时会被标记为dirty
+        /// </summary>
         public bool IsDirty
         {
             get { return this.m_isDirty; }
             set { m_isDirty = value; }
         }
 
+        /// <summary>
+        /// 位置信息发生变化时触发的Action
+        /// </summary>
         private Action<IObservable<Vector2Int>, Vector2Int> m_positonNotifyEventHandler;
 
         public MYXZEntity(Character character, int interestRadius)
@@ -93,7 +101,7 @@ namespace MYXZ
                 }
                 catch (Exception e)
                 {
-                    Debug.Log(e);
+                    DebugHelper.Log("试图移除不存在的观察者", this.Transform.gameObject, DebugType.Error);
                     throw;
                 }
             }

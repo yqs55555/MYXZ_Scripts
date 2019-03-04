@@ -91,7 +91,7 @@ namespace MYXZ
                     }
                 }
                 storeInAssetBundleRes = new StoreInAssetBundleResource(type, path, chunk);
-                AssetBundlePath.Type2Path.Add(type, storeInAssetBundleRes);
+                AssetBundlePath.Type2StoreInfo.Add(type, storeInAssetBundleRes);
             }
         }
 
@@ -144,7 +144,7 @@ namespace MYXZ
             /// </summary>
             /// <param name="id">id</param>
             /// <returns>id的类型</returns>
-            public static string GetType(string id)
+            public static string GetTypeId(string id)
             {
                 return id.Substring(0, 2);
             }
@@ -162,7 +162,7 @@ namespace MYXZ
 
         public class AssetBundlePath
         {
-            public static Dictionary<string, IStoreInAssetBundle> Type2Path = new Dictionary<string, IStoreInAssetBundle>();
+            public static Dictionary<string, IStoreInAssetBundle> Type2StoreInfo = new Dictionary<string, IStoreInAssetBundle>();
         }
 
         public class Save

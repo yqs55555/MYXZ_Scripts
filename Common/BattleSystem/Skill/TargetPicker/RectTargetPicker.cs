@@ -16,29 +16,28 @@ namespace MYXZ
 {
     public class RectTargetPicker : TargetPicker
     {
-        private float mWidth;
-        private float mLength;
+        private float m_width;
+        private float m_length;
 
         public RectTargetPicker(float width, float length)
         {
-            this.mWidth = width;
-            this.mLength = length;
-
+            this.m_width = width;
+            this.m_length = length;
         }
 
-        public override List<Transform> Pick(Transform player, List<Transform> targets)
+        public override LinkedList<MYXZEntity> Pick(Transform player, IEnumerable<MYXZEntity> targets)
         {
             if (targets == null)
                 return null;
-            List<Transform> results = new List<Transform>();
-            foreach (Transform target in targets)
+            this.Targets.Clear();
+            foreach (MYXZEntity entity in targets)
             {
-                if (MYXZMath.IsInRectArea(player.position, player.forward, target.position, this.mWidth, this.mLength))
+                if (MYXZMath.IsInRectArea(player.position, player.forward, entity.Transform.position, this.m_width, this.m_length))
                 {
-                    results.Add(target);
+                    this.Targets.AddFirst(entity);
                 }
             }
-            return results;
+            return this.Targets;
         }
     }
 }
