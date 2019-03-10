@@ -22,7 +22,10 @@ namespace MYXZ
      * 和技能的具体释放（SkillLeaf节点），所有节点有三种状态：Running，Finish，FailToRun，
      * 对于SkillCondition，其下有多个子节点，当某个子节点成功执行时（返回Finish时），
      * 此SkillCondition节点也将返回Finish；对于SkillLeaf节点，如果是瞬发的就会直接返回
-     * Finish，如果有一定持续时间的，则会返回Running，并且在其结束时通知其父节点Finish。
+     * Finish，如果有一定持续时间的，则会返回Running，并且在其结束时通知其父节点Finish，
+     * 在其被打断时也会通知其父节点FailToRun或者其他状态（这里应该再添加一个观察者模式）。
+     * 而对于根节点而言，会依次执行各个子节点，直到所有子节点执行完毕，进入技能冷却时间。
+     *
      */
 
     /// <summary>
