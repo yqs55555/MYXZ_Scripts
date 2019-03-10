@@ -73,7 +73,7 @@ namespace MYXZ
 
                     if (childNode.Name.Equals("SkillBase")) //具体技能
                     {
-                        SkillBase skillBase = GetSkillBase(childNode.Attributes["Id"].Value);
+                        SkillLeaf skillBase = GetSkillBase(childNode.Attributes["Id"].Value);
                         skillNode.AddChildNode(skillBase);
                         TraverseToGetSkillTree(skillBase, childNode);
                     }
@@ -86,7 +86,7 @@ namespace MYXZ
         /// </summary>
         /// <param name="skillBaseId"></param>
         /// <returns></returns>
-        private SkillBase GetSkillBase(string skillBaseId)
+        private SkillLeaf GetSkillBase(string skillBaseId)
         {
             XmlDocument doc = new XmlDocument();
             try
@@ -132,7 +132,7 @@ namespace MYXZ
                     skillTime = float.Parse(childNode.InnerText);
                 }
             }
-            return new SkillBase(skillBaseId, attackArea, animationName, skillTime);
+            return new SkillLeaf(skillBaseId, attackArea, animationName, skillTime);
         }
     }
 }

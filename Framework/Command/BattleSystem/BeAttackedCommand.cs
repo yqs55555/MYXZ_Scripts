@@ -26,7 +26,7 @@ namespace MYXZ
         public Transform BeAttacked { get; set; }
 
         [Inject]
-        public SkillBase Skill { get; set; }
+        public SkillLeaf Skill { get; set; }
 
         public override void Execute()
         {

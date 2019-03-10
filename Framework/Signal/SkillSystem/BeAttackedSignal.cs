@@ -15,7 +15,7 @@ using UnityEngine;
 
 namespace MYXZ
 {
-    public class BeAttackedSignal : Signal<GameObject, Transform, SkillBase>
+    public class BeAttackedSignal : Signal<GameObject, Transform, SkillLeaf>
     {
     }
 }

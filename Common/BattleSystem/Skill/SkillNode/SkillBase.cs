@@ -12,7 +12,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using strange.extensions.mediation.impl;
 using UnityEngine;
 
 namespace MYXZ
@@ -21,7 +20,7 @@ namespace MYXZ
     /// 释放的技能的子技能（即技能的最小单元）,不会有子节点了
     /// </summary>
     [Serializable]
-    public class SkillBase : SkillNode
+    public class SkillLeaf : SkillNode
     {
         /// <summary>
         /// 此技能的攻击区域
@@ -40,7 +39,7 @@ namespace MYXZ
         private readonly string mAnimationName;
         private readonly float mSkillTime;
 
-        public SkillBase(string id, TargetPicker targetPicker,
+        public SkillLeaf(string id, TargetPicker targetPicker,
             string animationName, float skillTime) : base(id)
         {
             this.m_targetPicker = targetPicker;

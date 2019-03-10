@@ -29,17 +29,27 @@ namespace MYXZ
             SkillNodeState currentNodeState = SkillNodeState.FailToRun;
             for (int i = 0; i < ChildSkillNodes.Count; i++)
             {
-                if (ChildSkillNodes[NextUse].Use() == SkillNodeState.Finish)   //此子技能可以释放
+                switch (ChildSkillNodes[NextUse].Use())
                 {
-                    currentNodeState = SkillNodeState.Running;                          //此节点的子节点正在释放
-                    NextUse = (NextUse + 1) % ChildSkillNodes.Count;
-                    if (NextUse == 0)                                                   //如果刚才释放的是最后一个子节点技能，代表完成
-                    {
-                        currentNodeState = SkillNodeState.Finish;
-                    }
-                    break; 
+                    case SkillNodeState.Running:
+                        return SkillNodeState.Running;
+
+                    case SkillNodeState.Finish:                 //此子技能释放完毕
+                        currentNodeState = SkillNodeState.Running;          //此节点的子节点正在释放
+                        NextUse = (NextUse + 1) % ChildSkillNodes.Count;
+                        if (NextUse == 0)                                   //如果刚才释放的是最后一个子节点技能，代表完成
+                        {
+                            currentNodeState = SkillNodeState.Finish;
+                        }
+                        break;
+                    case SkillNodeState.FailToRun:          //当子技能无法被释放时
+                        NextUse = (NextUse + 1) % ChildSkillNodes.Count;
+                        break;
+
+                    default:
+                        NextUse = (NextUse + 1) % ChildSkillNodes.Count;
+                        break;
                 }
-                NextUse = (NextUse + 1) % ChildSkillNodes.Count;
             }
             return currentNodeState;
         }

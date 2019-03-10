@@ -34,7 +34,6 @@ namespace MYXZ
         {
             if (!m_hasInit)
             {
-                m_hasInit = true;
                 XmlDocument xml = new XmlDocument();
                 xml.LoadXml(new StreamReader(Path.Combine(BASE_PATH, ROOT_CONFIG_PATH)).ReadToEnd());
 
@@ -59,6 +58,7 @@ namespace MYXZ
                             break;
                     }
                 }
+                m_hasInit = true;
             }
         }
 

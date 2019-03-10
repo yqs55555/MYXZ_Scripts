@@ -86,7 +86,7 @@ namespace MYXZ
 
         }
 
-        private void BeAttacked(Transform attacker, SkillBase skill)
+        private void BeAttacked(Transform attacker, SkillLeaf skill)
         {
             BeAttackedSignal.Dispatch(attacker.gameObject, this.transform, skill);
         }

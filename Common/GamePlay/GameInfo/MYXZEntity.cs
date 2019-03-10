@@ -101,7 +101,7 @@ namespace MYXZ
                 }
                 catch (Exception e)
                 {
-                    DebugHelper.Log("试图移除不存在的观察者", this.Transform.gameObject, DebugType.Error);
+                    DebugHelper.Log(e.Message + "试图移除不存在的观察者", this.Transform.gameObject, DebugType.Error);
                     throw;
                 }
             }
